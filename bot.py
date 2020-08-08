@@ -34,4 +34,10 @@ async def about(ctx):
     pic = discord.File(bcdata['info_pic'])
     await ctx.send(file = pic)
 
+@bot.command
+async def meme(ctx):
+    random_pic = random.choice(bcdata['meme_pics'])
+    pic = discord.File(random_meme)
+    await ctx.send(file = meme)
+
 bot.run(bcdata['token'])
