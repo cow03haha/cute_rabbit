@@ -3,6 +3,5 @@
     "join_channel" : "620192290547433492",
     "leave_channel" : "620192290547433492",
     "info_pic" : "C:\\Users\\cow03\\Desktop\\python\\dc-bot\\cow03haha\\pics\\18.png",
-    "meme_pic1" : "C:\\Users\\cow03\\Desktop\\python\\dc-bot\\cow03haha\\pics\\meme1.jpg",
-    "meme_pic2" : "C:\\Users\\cow03\\Desktop\\python\\dc-bot\\cow03haha\\pics\\meme2.jpg"
+    "meme_pic" : ["C:\\Users\\cow03\\Desktop\\python\\dc-bot\\cow03haha\\pics\\meme1.jpg", "C:\\Users\\cow03\\Desktop\\python\\dc-bot\\cow03haha\\pics\\meme2.jpg"]
 }
