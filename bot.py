@@ -27,6 +27,21 @@ async def on_member_remove(self, member):
     channel = bot.get_channel(int(bcdata['leave_channel']))
     await channel.send(f'{member} 離開了牛牛神殿')
 
+@bot.command()
+async def load(ctx, extension):
+    bot.load_extension(f'cmds.{extension}')
+    await ctx.send(f'{extension} 模組載入完成')
+
+@bot.command()
+async def unload(ctx, extension):
+    bot.unload_extension(f'cmds.{extension}')
+    await ctx.send(f'{extension} 模組卸載完成')
+
+@bot.command()
+async def reload(ctx, extension):
+    bot.reload_extension(f'cmds.{extension}')
+    await ctx.send(f'{extension} 模組重新載入完成')
+
 for filename in os.listdir('./cmds'):
     if filename.endswith('.py'):
         bot.load_extension(f'cmds.{filename[:-3]}')
