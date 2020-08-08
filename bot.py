@@ -33,9 +33,8 @@ async def ping(ctx):
 #發送本地圖片(如果想發送網路圖片，直接send網址就好)
 @bot.command()
 async def about(ctx):
-    #發送檔案的處理方式
-    pic = discord.File(bcdata['info_pic'])
-    await ctx.send(file = pic)
+    pic = discord.File(bcdata['info_pic'])#發送檔案的處理方式
+    await ctx.send(file = pic)#用file來定要發送檔案
 
 #發送隨機圖片(使用random.choice)
 @bot.command()
