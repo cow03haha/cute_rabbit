@@ -4,11 +4,14 @@ import discord
 from discord.ext import commands
 import json
 
+#導入json庫
 with open('settings.json', 'r', encoding='utf8') as bcfile:
     bcdata = json.load(bcfile)
 
+#代表bot本身
 bot = commands.Bot(command_prefix='/')
 
+#bot上線
 @bot.event
 async def on_ready():
     print("bot online!")
@@ -21,7 +24,7 @@ async def on_member_join(member):
 
 @bot.event
 async def on_member_remove(member):
-   #print(f'{member} 離開了牛牛神殿')
+    #print(f'{member} 離開了牛牛神殿')
     channel = bot.get_channel(int(bcdata['leave_channel']))
     await channel.send(f'{member} 離開了牛牛神殿')
 
