@@ -1,4 +1,5 @@
 import os
+import random
 import discord
 from discord.ext import commands
 import json
@@ -28,5 +29,9 @@ async def on_member_remove(member):
 async def ping(ctx):
     await ctx.send(f'延遲：{round(bot.latency*1000)} 毫秒(ms)')
 
+@bot.command()
+async def about(ctx):
+    pic = discord.File(bcdata['info_pic'])
+    await ctx.send(file = pic)
 
 bot.run(bcdata['token'])
