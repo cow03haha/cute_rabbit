@@ -15,18 +15,6 @@ bot = commands.Bot(command_prefix='/')
 async def on_ready():
     print("bot online!")
 
-@bot.event
-async def on_member_join(self, member):
-    #print(f'{member} 加入了牛牛神殿')
-    channel = bot.get_channel(int(bcdata['join_channel']))
-    await channel.send(f'{member} 加入了牛牛神殿')
-
-@bot.event
-async def on_member_remove(self, member):
-    #print(f'{member} 離開了牛牛神殿')
-    channel = bot.get_channel(int(bcdata['leave_channel']))
-    await channel.send(f'{member} 離開了牛牛神殿')
-
 @bot.command()
 async def load(ctx, extension):
     bot.load_extension(f'cmds.{extension}')
