@@ -1,7 +1,7 @@
-import random
 import discord
 from discord.ext import commands
 import json
+import os
 
 #導入json庫
 with open('settings.json', 'r', encoding='utf8') as bcfile:
@@ -15,29 +15,9 @@ bot = commands.Bot(command_prefix='/')
 async def on_ready():
     print("bot online!")
 
-@bot.event
-async def on_member_join(member):
-    #print(f'{member} 加入了牛牛神殿')
-    channel = bot.get_channel(int(bcdata['join_channel']))
-    await channel.send(f'{member} 加入了牛牛神殿')
+for filename in os.listdir('./cmds'):
+    if filename.endswith('.py')
+        bot.load_extension(f'cmds.{filename[:-3]}')
 
-@bot.event
-async def on_member_remove(member):
-    #print(f'{member} 離開了牛牛神殿')
-    channel = bot.get_channel(int(bcdata['leave_channel']))
-    await channel.send(f'{member} 離開了牛牛神殿')
-
-#發送本地圖片(如果想發送網路圖片，直接send網址就好)
-@bot.command()
-async def about(ctx):
-    pic = discord.File(bcdata['info_pic'])#發送檔案的處理方式
-    await ctx.send(file = pic)#用file來定要發送檔案
-
-#發送隨機圖片(使用random.choice)
-@bot.command()
-async def meme(ctx):
-    random_pic = random.choice(bcdata['meme_pics'])
-    pic = discord.File(random_pic)
-    await ctx.send(file = pic)
-
-bot.run(bcdata['token'])
+if __name__ == "__main__":
+    bot.run(bcdata['token'])
