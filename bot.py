@@ -16,7 +16,7 @@ async def on_ready():
     print("bot online!")
 
 for filename in os.listdir('./cmds'):
-    if filename.endswith('.py')
+    if filename.endswith('.py'):
         bot.load_extension(f'cmds.{filename[:-3]}')
 
 if __name__ == "__main__":
