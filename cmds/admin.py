@@ -32,6 +32,7 @@ class Admin(Cog_Extension):
     async def poweroff(self, ctx):
         '''關閉bot'''
         if ctx.author.id == 315414910689476609:
+            await ctx.send('bot關閉中...')
             exit()
         else:
             await ctx.send('只有牛牛能用這個指令')
