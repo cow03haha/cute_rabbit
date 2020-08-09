@@ -17,6 +17,7 @@ async def on_ready():
 
 @bot.command()
 async def load(ctx, extension):
+    '''載入特定模組'''
     if ctx.author.id == 315414910689476609:
         bot.load_extension(f'cmds.{extension}')
         await ctx.send(f'{extension} 模組載入完成')
@@ -24,6 +25,7 @@ async def load(ctx, extension):
         await ctx.send('只有牛牛能用這個指令')
 @bot.command()
 async def unload(ctx, extension):
+    '''卸載特定抹組'''
     if ctx.author.id == 315414910689476609:
         bot.unload_extension(f'cmds.{extension}')
         await ctx.send(f'{extension} 模組卸載完成')
@@ -31,6 +33,7 @@ async def unload(ctx, extension):
         await ctx.send('只有牛牛能用這個指令')
 @bot.command()
 async def reload(ctx, extension):
+    '''重新載入特定模組'''
     if ctx.author.id == 315414910689476609:
         bot.reload_extension(f'cmds.{extension}')
         await ctx.send(f'{extension} 模組重新載入完成')
