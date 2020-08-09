@@ -17,19 +17,25 @@ async def on_ready():
 
 @bot.command()
 async def load(ctx, extension):
-    bot.load_extension(f'cmds.{extension}')
-    await ctx.send(f'{extension} 模組載入完成')
-
+    if ctx.author.id == 315414910689476609:
+        bot.load_extension(f'cmds.{extension}')
+        await ctx.send(f'{extension} 模組載入完成')
+    else:
+        await ctx.send('只有牛牛能用這個指令')
 @bot.command()
 async def unload(ctx, extension):
-    bot.unload_extension(f'cmds.{extension}')
-    await ctx.send(f'{extension} 模組卸載完成')
-
+    if ctx.author.id == 315414910689476609:
+        bot.unload_extension(f'cmds.{extension}')
+        await ctx.send(f'{extension} 模組卸載完成')
+    else:
+        await ctx.send('只有牛牛能用這個指令')
 @bot.command()
 async def reload(ctx, extension):
-    bot.reload_extension(f'cmds.{extension}')
-    await ctx.send(f'{extension} 模組重新載入完成')
-
+    if ctx.author.id == 315414910689476609:
+        bot.reload_extension(f'cmds.{extension}')
+        await ctx.send(f'{extension} 模組重新載入完成')
+    else:
+        await ctx.send('只有牛牛能用這個指令')
 for filename in os.listdir('./cmds'):
     if filename.endswith('.py'):
         bot.load_extension(f'cmds.{filename[:-3]}')
