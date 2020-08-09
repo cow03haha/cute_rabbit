@@ -4,6 +4,7 @@ from cores.classes import Cog_Extension
 from bot import bcdata
 import json
 import random
+import os
 
 class Fun(Cog_Extension):
     #發送本地圖片(如果想發送網路圖片，直接send網址就好)
@@ -11,6 +12,7 @@ class Fun(Cog_Extension):
     @commands.command()
     async def meme(self, ctx):
         '''隨機梗圖'''
+
         random_pic = random.choice(bcdata['meme_pics'])
         pic = discord.File(random_pic)#發送檔案的處理方式
         await ctx.send(file = pic)#用file來定要發送檔案
