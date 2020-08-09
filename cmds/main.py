@@ -13,8 +13,8 @@ class Main(Cog_Extension):
     
     #鸚鵡
     @commands.command()
-    async def say(self, ctx, message):
-        await ctx.send(message)
+    async def say(self, ctx, *, msg):
+        await ctx.send(msg)
     
     @commands.command()
     async def about(self, ctx):
@@ -25,6 +25,11 @@ class Main(Cog_Extension):
         embed.add_field(name="作者", value="cow03#7829", inline=True)
         embed.add_field(name="support server", value="[link](https://discord.gg/DRqZk6Y)", inline=True)
         await ctx.send(embed=embed)
+    
+    @commands.command()
+    async def sayd(self, ctx, *, msg):
+        await ctx.message.delete()
+        await ctx.send(msg)
 
 def setup(bot):
     bot.add_cog(Main(bot))
