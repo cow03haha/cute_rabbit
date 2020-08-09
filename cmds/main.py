@@ -9,15 +9,18 @@ class Main(Cog_Extension):
     #ping指令(discord給的單位為秒，直接乘於1000得到毫秒(ms)，在用round取整數)
     @commands.command()
     async def ping(self, ctx):
+        '''測試延遲'''
         await ctx.send(f'延遲：{round(self.bot.latency*1000)} 毫秒(ms)')
     
     #鸚鵡
     @commands.command()
     async def say(self, ctx, *, msg):
+        '''你說我回'''
         await ctx.send(msg)
     
     @commands.command()
     async def about(self, ctx):
+        '''bot資訊'''
         tw = pytz.timezone('Asia/Taipei')
         embed=discord.Embed(title="about", description="開心莊園專用bot", color=0xf5ed00, timestamp=datetime.datetime.now(tz=tw))
         embed.set_author(name="cow03", icon_url="https://i.imgur.com/QinbCaq.png")
@@ -28,6 +31,7 @@ class Main(Cog_Extension):
     
     @commands.command()
     async def sayd(self, ctx, *, msg):
+        '''你說我回(你傳的訊息會刪除)'''
         await ctx.message.delete()
         await ctx.send(msg)
 
