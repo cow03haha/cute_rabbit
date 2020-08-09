@@ -10,6 +10,7 @@ class Fun(Cog_Extension):
     #發送隨機圖片(使用random.choice)
     @commands.command()
     async def meme(self, ctx):
+        '''隨機梗圖'''
         random_pic = random.choice(bcdata['meme_pics'])
         pic = discord.File(random_pic)#發送檔案的處理方式
         await ctx.send(file = pic)#用file來定要發送檔案
