@@ -39,6 +39,7 @@ async def reload(ctx, extension):
         await ctx.send(f'{extension} 模組重新載入完成')
     else:
         await ctx.send('只有牛牛能用這個指令')
+
 for filename in os.listdir('./cmds'):
     if filename.endswith('.py'):
         bot.load_extension(f'cmds.{filename[:-3]}')
