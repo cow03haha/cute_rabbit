@@ -10,14 +10,15 @@ with open('settings.json', 'r', encoding='utf8') as bcfile:
 #代表bot本身
 bot = commands.Bot(command_prefix='/')
 
+#導入梗圖(list)
+dn = os.path.dirname(__file__)
+dn = os.path.join(dn, 'meme')
+imgs = os.listdir(dn)
+imgs = [os.path.join(dn, path) for path in imgs]
+
 #bot上線
 @bot.event
 async def on_ready():
-    dn = os.path.dirname(__file__)
-    dn = os.path.join(dn, 'meme')
-    imgs = os.listdir(dn)
-    imgs = [os.path.join(dn, path) for path in imgs]
-
     print("bot online!")
 
 @bot.command()
