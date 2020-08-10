@@ -21,7 +21,11 @@ imgs = [os.path.join(dn, path) for path in imgs]
 async def on_ready():
     print("bot online!")
 
-@bot.get_user(315414910689476609)
+#檢查所有者
+def check_owner(ctx):
+    return ctx.message.author.id == 315414910689476609
+
+@commands.check(check_owner)
 @bot.command()
 async def load(ctx, extension):
     '''載入特定模組'''
@@ -30,7 +34,7 @@ async def load(ctx, extension):
         await ctx.send(f'{extension} 模組載入完成')
     else:
         await ctx.send('只有牛牛能用這個指令')
-@bot.get_user(315414910689476609)
+@commands.check(check_owner)
 @bot.command()
 async def unload(ctx, extension):
     '''卸載特定抹組'''
@@ -39,7 +43,7 @@ async def unload(ctx, extension):
         await ctx.send(f'{extension} 模組卸載完成')
     else:
         await ctx.send('只有牛牛能用這個指令')
-@bot.get_user(315414910689476609)
+@commands.check(check_owner)
 @bot.command()
 async def reload(ctx, extension):
     '''重新載入特定模組'''
@@ -49,7 +53,7 @@ async def reload(ctx, extension):
     else:
         await ctx.send('只有牛牛能用這個指令')
 
-@bot.get_user(315414910689476609)
+@commands.check(check_owner)
 @bot.command()
 async def poweroff(ctx):
     '''關閉bot'''
