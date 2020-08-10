@@ -17,11 +17,12 @@ class Admin(Cog_Extension):
         channel = self.bot.get_channel(int(bcdata['leave_channel']))
         await channel.send(f'{member} 離開了牛牛神殿')
 
+    @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def clear(self, ctx, count:int):
+        '''清理當前頻道的訊息'''
         await ctx.channel.purge(limit=count+1)
-        await ctx.send(f'清理{count}條訊息成功')
-        await ctx.channel.purge(limit=1)
+        await ctx.send(f'清理{count}條訊息成功', delete_after=3)
 
 def setup(bot):
     bot.add_cog(Admin(bot))
