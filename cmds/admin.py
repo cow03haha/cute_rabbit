@@ -2,7 +2,6 @@ import discord
 from discord.ext import commands
 from cores.classes import Cog_Extension
 from bot import bcdata
-import json
 
 class Admin(Cog_Extension):
     @commands.Cog.listener()
