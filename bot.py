@@ -2,7 +2,6 @@ import discord
 from discord.ext import commands
 import json
 import os
-from cores.exceptions import TerminateSignal, RestartSignal
 
 #導入json庫
 with open('settings.json', 'r', encoding='utf8') as bcfile:
@@ -14,6 +13,11 @@ bot = commands.Bot(command_prefix='/')
 #bot上線
 @bot.event
 async def on_ready():
+    dn = os.path.dirname(__file__)
+    dn = os.path.join(dn, 'meme')
+    imgs = os.listdir(dn)
+    imgs = [os.path.join(dn, path) for path in imgs]
+
     print("bot online!")
 
 @bot.command()
