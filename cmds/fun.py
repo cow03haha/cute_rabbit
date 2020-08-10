@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 from cores.classes import Cog_Extension
-from bot import bcdata
+from bot import bcdata, imgs
 import json
 import random
 import os
@@ -12,8 +12,7 @@ class Fun(Cog_Extension):
     @commands.command()
     async def meme(self, ctx):
         '''隨機梗圖'''
-
-        random_pic = random.choice(bcdata['meme_pics'])
+        random_pic = random.choice(imgs)
         pic = discord.File(random_pic)#發送檔案的處理方式
         await ctx.send(file = pic)#用file來定要發送檔案
     
