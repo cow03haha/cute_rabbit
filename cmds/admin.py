@@ -20,12 +20,16 @@ class Admin(Cog_Extension):
     @commands.command()
     async def clear(self, ctx, count:int):
         '''清理當前頻道的訊息'''
-        if bcdata['admin_roles'] in ctx.author.roles:
-            await ctx.channel.purge(limit=count+1)
-            await ctx.send(f'清理{count}條訊息成功')
-            await ctx.channel.purge(limit=1)
-        else:
-            await ctx.send('只有管理員能用這個指令')
+        role = bcdata['admin_roles']
+        print(role)
+        for i in range(len(role)):
+            if role[i] in ctx.author.roles:
+                await ctx.channel.purge(limit=count+1)
+                await ctx.send(f'清理{count}條訊息成功')
+                #await ctx.channel.purge(limit=1)
+            else:
+                print(ctx.autort.roles)
+                await ctx.send('只有管理員能用這個指令')
 
 def setup(bot):
     bot.add_cog(Admin(bot))
