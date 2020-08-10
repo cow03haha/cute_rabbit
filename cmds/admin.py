@@ -23,13 +23,14 @@ class Admin(Cog_Extension):
         role = bcdata['admin_roles']
         print(role)
         for i in range(len(role)):
+            print(role[i])
             if role[i] in ctx.author.roles:
                 await ctx.channel.purge(limit=count+1)
                 await ctx.send(f'清理{count}條訊息成功')
-                #await ctx.channel.purge(limit=1)
-            else:
-                print(ctx.autort.roles)
-                await ctx.send('只有管理員能用這個指令')
+                await ctx.channel.purge(limit=1)
+                return
+
+        await ctx.send('只有管理員能用這個指令')
 
 def setup(bot):
     bot.add_cog(Admin(bot))
