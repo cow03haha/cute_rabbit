@@ -25,9 +25,8 @@ class Admin(Cog_Extension):
     
     @commands.Cog.listener()
     async def on_raw_reaction_add(self, payload):
-        print(payload.emoji)
         if payload.message_id == 742363869015703593:
-            if str(payload.emoji) == ':blobpopcorn: ':
+            if str(payload.emoji) == '<:blobpopcorn:626740624548167687>':
                 guild = self.bot.get_guild(payload.guild_id)#取得server id
                 role = guild.get_role(742364064369475644)#取得role資料
                 await payload.member.add_roles(role)#給予role
@@ -36,7 +35,7 @@ class Admin(Cog_Extension):
     @commands.Cog.listener()
     async def on_raw_reaction_remove(self, payload):
         if payload.message_id == 742363869015703593:
-            if str(payload.emoji) == '<:blobpopcorn:713660254440783932>':
+            if str(payload.emoji) == '<:blobpopcorn:626740624548167687>':
                 guild = self.bot.get_guild(payload.guild_id)#取得server id
                 role = guild.get_role(742364064369475644)#取得role資料
                 user = guild.get_member(payload.user_id)
