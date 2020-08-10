@@ -46,7 +46,6 @@ async def poweroff(self, ctx):
     '''關閉bot'''
     if ctx.author.id == 315414910689476609:
         await ctx.send('bot關閉中...')
-        raise TerminateSignal()
     else:
         await ctx.send('只有牛牛能用這個指令')
 
