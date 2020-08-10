@@ -42,5 +42,9 @@ class Admin(Cog_Extension):
                 await user.remove_roles(role)#移除role
                 await user.send(f'移除 **{role}** 身分組成功')
 
+    @commands.Cog.listener()
+    async def on_command_error(self, ctx,error):
+         await ctx.send(error)
+
 def setup(bot):
     bot.add_cog(Admin(bot))
