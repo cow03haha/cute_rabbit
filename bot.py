@@ -35,7 +35,7 @@ async def load(ctx, extension):
 @commands.check(check_owner)
 @bot.command()
 async def unload(ctx, extension):
-    '''卸載特定抹組'''
+    '''卸載特定模組'''
     bot.unload_extension(f'cmds.{extension}')
     await ctx.send(f'{extension} 模組卸載完成')
 
