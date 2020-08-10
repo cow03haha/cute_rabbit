@@ -42,15 +42,16 @@ async def reload(ctx, extension):
         await ctx.send('只有牛牛能用這個指令')
 
 @bot.command()
-async def poweroff(self, ctx):
+async def poweroff(ctx):
     '''關閉bot'''
     if ctx.author.id == 315414910689476609:
         await ctx.send('bot關閉中...')
+        raise TerminateSignal()
     else:
         await ctx.send('只有牛牛能用這個指令')
 
 @bot.command()
-async def reboot(self, ctx):
+async def reboot(ctx):
     '''重啟bot'''
     if ctx.author.id == 315414910689476609:
         await ctx.send('bot重新啟動中...')
