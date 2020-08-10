@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 import json
 import os
+from . import exceptions
 
 #導入json庫
 with open('settings.json', 'r', encoding='utf8') as bcfile:
@@ -37,6 +38,24 @@ async def reload(ctx, extension):
     if ctx.author.id == 315414910689476609:
         bot.reload_extension(f'cmds.{extension}')
         await ctx.send(f'{extension} 模組重新載入完成')
+    else:
+        await ctx.send('只有牛牛能用這個指令')
+
+@bot.command()
+async def poweroff(self, ctx):
+    '''關閉bot'''
+    if ctx.author.id == 315414910689476609:
+        await ctx.send('bot關閉中...')
+        raise exceptions.TerminateSignal()
+    else:
+        await ctx.send('只有牛牛能用這個指令')
+
+@bot.command()
+async def poweroff(self, ctx):
+    '''重啟bot'''
+    if ctx.author.id == 315414910689476609:
+        await ctx.send('bot重新啟動中...')
+        raise exceptions.TerminateSignal()
     else:
         await ctx.send('只有牛牛能用這個指令')
 
