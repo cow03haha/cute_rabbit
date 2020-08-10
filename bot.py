@@ -51,11 +51,11 @@ async def poweroff(self, ctx):
         await ctx.send('只有牛牛能用這個指令')
 
 @bot.command()
-async def poweroff(self, ctx):
+async def reboot(self, ctx):
     '''重啟bot'''
     if ctx.author.id == 315414910689476609:
         await ctx.send('bot重新啟動中...')
-        raise exceptions.TerminateSignal()
+        raise exceptions.RestartSignal()
     else:
         await ctx.send('只有牛牛能用這個指令')
 
