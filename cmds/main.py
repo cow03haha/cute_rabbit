@@ -34,6 +34,11 @@ class Main(Cog_Extension):
         '''你說我回(你傳的訊息會刪除)'''
         await ctx.message.delete()
         await ctx.send(msg)
-
+    
+    @commands.command()
+    async def srvinfo(self, ctx):
+        guild = self.bot.get_guild(574605865940680707)
+        owner_id = guild.owner.id
+        await ctx.send(f'此伺服器擁有者是')
 def setup(bot):
     bot.add_cog(Main(bot))
