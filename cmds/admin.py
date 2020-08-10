@@ -20,20 +20,11 @@ class Admin(Cog_Extension):
     @commands.command()
     async def clear(self, ctx, count:int):
         '''清理當前頻道的訊息'''
-        if message.member.roles.get == 610039014552240129:
+        role = 620176585395404830
+        if role in ctx.author.roles:
             await ctx.channel.purge(limit=count+1)
             await ctx.send(f'清理{count}條訊息成功')
             await ctx.channel.purge(limit=1)
-        else:
-            await ctx.send('只有牛牛能用這個指令')
-            await ctx.channel.purge(limit=2)
-    
-    @commands.command()
-    async def poweroff(self, ctx):
-        '''關閉bot'''
-        if ctx.author.id == 315414910689476609:
-            await ctx.send('bot關閉中...')
-            exit()
         else:
             await ctx.send('只有牛牛能用這個指令')
 
