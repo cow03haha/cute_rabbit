@@ -17,7 +17,7 @@ class Admin(Cog_Extension):
         channel = self.bot.get_channel(int(bcdata['leave_channel']))
         await channel.send(f'{member} 離開了牛牛神殿')
 
-    @commands.has_any_role(bcdata["管理員", "傳說區管理員", "亂鬥區管理員", "第五區管理員", "麥塊區管理員", "跑跑區管理員"])
+    @commands.has_any_role("管理員", "傳說區管理員", "亂鬥區管理員", "第五區管理員", "麥塊區管理員", "跑跑區管理員")
     async def clear(self, ctx, count:int):
         await ctx.channel.purge(limit=count+1)
         await ctx.send(f'清理{count}條訊息成功')
