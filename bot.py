@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 import json
 import os
-from . import exceptions
+from cores.exceptions import TerminateSignal, RestartSignal
 
 #導入json庫
 with open('settings.json', 'r', encoding='utf8') as bcfile:
@@ -46,7 +46,7 @@ async def poweroff(self, ctx):
     '''關閉bot'''
     if ctx.author.id == 315414910689476609:
         await ctx.send('bot關閉中...')
-        raise exceptions.TerminateSignal()
+        raise TerminateSignal()
     else:
         await ctx.send('只有牛牛能用這個指令')
 
@@ -55,7 +55,7 @@ async def reboot(self, ctx):
     '''重啟bot'''
     if ctx.author.id == 315414910689476609:
         await ctx.send('bot重新啟動中...')
-        raise exceptions.RestartSignal()
+        raise RestartSignal()
     else:
         await ctx.send('只有牛牛能用這個指令')
 
