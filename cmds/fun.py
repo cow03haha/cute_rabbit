@@ -2,7 +2,6 @@ import discord
 from discord.ext import commands
 from cores.classes import Cog_Extension
 from bot import bcdata, imgs
-import json
 import random
 import os
 
@@ -19,9 +18,7 @@ class Fun(Cog_Extension):
     @commands.Cog.listener()
     async def on_message(self, msg):
         if msg.content.endswith('牛牛') and msg.author != self.bot.user:
-            cow_msg = ['安安', 'hello', '叫我嗎?', 'owo']
-            message = random.choice(cow_msg)
-            await msg.channel.send(message)
+            await msg.channel.send(random.choice(bcdata['cow_msg']))
 
 def setup(bot):
     bot.add_cog(Fun(bot))
