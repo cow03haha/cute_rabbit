@@ -3,7 +3,6 @@ from discord.ext import commands
 from cores.classes import Cog_Extension
 from bot import bcdata, check_owner
 import datetime
-import time
 import pytz
 
 class Main(Cog_Extension):
