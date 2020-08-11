@@ -6,6 +6,7 @@ import random
 import os
 
 class Fun(Cog_Extension):
+    '''娛樂指令'''
     #發送本地圖片(如果想發送網路圖片，直接send網址就好)
     #發送隨機圖片(使用random.choice)
     @commands.command()
