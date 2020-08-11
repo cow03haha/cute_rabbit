@@ -37,8 +37,10 @@ class Main(Cog_Extension):
     
     @commands.command()
     async def srvinfo(self, ctx):
+        '''顯示伺服器資訊'''
         guild = self.bot.get_guild(574605865940680707)
-        owner_id = guild.owner.id
-        await ctx.send(f'此伺服器擁有者是')
+        owner = guild.owner
+        await ctx.send(f'此伺服器擁有者是 {owner}')
+        
 def setup(bot):
     bot.add_cog(Main(bot))
