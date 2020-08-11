@@ -4,6 +4,8 @@ from cores.classes import Cog_Extension
 from bot import bcdata, imgs
 import random
 import os
+import datetime
+import pytz 
 
 class Fun(Cog_Extension):
     '''娛樂指令'''
