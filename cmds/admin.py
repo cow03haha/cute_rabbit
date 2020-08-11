@@ -20,7 +20,7 @@ class Admin(Cog_Extension):
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def clear(self, ctx, count:int):
-        '''清理當前頻道的訊息'''
+        '''清理當前頻道的訊息。用法：/clear 數量'''
         await ctx.channel.purge(limit=count+1)
         await ctx.send(f'清理{count}條訊息成功', delete_after=3)
     
