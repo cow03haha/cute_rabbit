@@ -3,6 +3,7 @@ from discord.ext import commands
 from cores.classes import Cog_Extension
 from bot import bcdata, check_owner
 import datetime
+import time
 import pytz
 
 class Main(Cog_Extension):
@@ -43,6 +44,14 @@ class Main(Cog_Extension):
         '''在特定頻道傳訊息'''
         channel = self.bot.get_channel(int(channel))
         await channel.send(msg)
+
+    @commands.command()
+    async def time(self, ctx):
+        '''顯示現在的時間'''
+        tw = pytz.timezone('Asia/Taipei')
+        time = datetime.datetime.now(tz=tw)
+        time = time.strftime('%H:%M:%S')
+        await ctx.send(f'現在的台灣時間是 {time}')
 
     @commands.command()
     async def srvinfo(self, ctx):
