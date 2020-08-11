@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 from cores.classes import Cog_Extension
-from bot import bcdata
+from bot import bcdata, check_owner
 import datetime
 import pytz
 
@@ -35,12 +35,20 @@ class Main(Cog_Extension):
         await ctx.message.delete()
         await ctx.send(msg)
     
+    @commands.check(check_owner)
+    @commands.command()
+    
+    async def says(self, ctx, channel, *, msg):
+        '''在特定頻道傳訊息'''
+        channel = self.bot.get_channel(int(channel))
+        await channel.send(msg)
+
     @commands.command()
     async def srvinfo(self, ctx):
         '''顯示伺服器資訊'''
         guild = self.bot.get_guild(574605865940680707)
         owner = guild.owner
         await ctx.send(f'此伺服器擁有者是 {owner}')
-        
+
 def setup(bot):
     bot.add_cog(Main(bot))
