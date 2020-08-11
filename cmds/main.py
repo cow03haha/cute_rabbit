@@ -50,13 +50,13 @@ class Main(Cog_Extension):
         '''顯示現在的時間'''
         tw = pytz.timezone('Asia/Taipei')
         time = datetime.datetime.now(tz=tw)
-        time = time.strftime('%H:%M:%S')
-        await ctx.send(f'現在的台灣時間是 {time}')
+        time = time.strftime("%H:%M:%S")
+        await ctx.send(f'現在的時間是 {time}')
 
     @commands.command()
     async def srvinfo(self, ctx):
         '''顯示伺服器資訊'''
-        guild = self.bot.get_guild(574605865940680707)
+        guild = self.bot.get_guild(ctx.guild.id)
         owner = guild.owner
         await ctx.send(f'此伺服器擁有者是 {owner}')
 
