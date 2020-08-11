@@ -4,6 +4,7 @@ from cores.classes import Cog_Extension
 from bot import bcdata
 
 class Admin(Cog_Extension):
+    '''管理指令'''
     @commands.Cog.listener()
     async def on_member_join(self, member):
         #print(f'{member} 加入了牛牛神殿')
