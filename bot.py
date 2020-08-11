@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 import json
 import os
+import random
 
 #導入json庫
 with open('settings.json', 'r', encoding='utf8') as bcfile:
@@ -17,10 +18,9 @@ imgs = os.listdir(dn)
 imgs = [os.path.join(dn, path) for path in imgs]
 
 #bot上線
-class Online(discord.Client):
-    @bot.event
-    async def on_ready(self):
-        print(f'{self.user} online')
+@bot.event()
+async def on_ready():
+    print('bot online!')
 
 #檢查所有者
 def check_owner(ctx):
@@ -52,7 +52,8 @@ async def reload(ctx, extension):
 async def poweroff(ctx):
     '''關閉bot'''
     await ctx.send('bot關閉中...')
-    exit()
+    await bot.logout()
+    await bot.close()
 
 for filename in os.listdir('./cmds'):
     if filename.endswith('.py'):
