@@ -21,7 +21,8 @@ class Admin(Cog_Extension):
     @commands.has_permissions(manage_messages=True)
     async def clear(self, ctx, count:int):
         '''清理當前頻道的訊息。用法：/clear 數量'''
-        await ctx.channel.purge(limit=count+1)
+        await ctx.message.delete()
+        await ctx.channel.purge(limit=count)
         await ctx.send(f'清理{count}條訊息成功', delete_after=3)
     
     @commands.Cog.listener()
@@ -33,7 +34,6 @@ class Admin(Cog_Extension):
                 await payload.member.add_roles(role)#給予role
                 await payload.member.send(f'領取 **{role}** 身分組成功')
 
-    @commands.Cog.listener()
     async def on_raw_reaction_remove(self, payload):
         if payload.message_id == 742363869015703593:
             if str(payload.emoji) == '<:blobpopcorn:626740624548167687>':
