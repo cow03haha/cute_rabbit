@@ -51,7 +51,7 @@ async def reload(ctx, extension):
 @bot.command()
 async def poweroff(ctx):
     '''關閉bot。'''
-    await ctx.send('bot關閉中...')
+    await ctx.send('bot關閉成功')
     await bot.logout()
     await bot.close()
 
