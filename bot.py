@@ -17,9 +17,10 @@ imgs = os.listdir(dn)
 imgs = [os.path.join(dn, path) for path in imgs]
 
 #bot上線
-@bot.event
-async def on_ready():
-    print("bot online!")
+class Online(discord.Client):
+    @bot.event
+    async def on_ready(self):
+        print(f'{self.user} online')
 
 #檢查所有者
 def check_owner(ctx):
