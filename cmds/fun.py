@@ -20,9 +20,5 @@ class Fun(Cog_Extension):
         if msg.content.endswith('牛牛') and msg.author != self.bot.user:
             await msg.channel.send(random.choice(bcdata['cow_msg']))
     
-    @commands.command()
-    async def 內戰(self, ctx, time):
-            
-
 def setup(bot):
     bot.add_cog(Fun(bot))
