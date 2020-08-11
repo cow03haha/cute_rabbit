@@ -37,5 +37,38 @@ class Fun(Cog_Extension):
         choice = random.choice(msg.split())
         await ctx.send(f'我選擇... {choice}!')
 
+    @commands.has_role(612613325766787072)
+    @commands.command()
+    async def 內戰(self, ctx, str_time, end_time):
+        '''傳說區內戰用'''
+        #<@&670280115556712458>
+        tw = pytz.timezone('Asia/Taipei')
+        embed=discord.Embed(title="內戰調查", description="增加任意表情來報名參加", colour=ctx.author.colour, timestamp=datetime.datetime.now(tz=tw))
+        embed.set_author(name=ctx.author, icon_url=str(ctx.author.avatar_url))
+        embed.add_field(name="內戰開始時間:", value=str_time, inline=True)
+        embed.add_field(name="報名截止時間:", value=end_time, inline=True)
+        global fight
+        fight = await ctx.send(embed=embed)
+        await fight.add_reaction('✅')
+    
+    @commands.Cog.listener()
+    async def on_raw_reaction_add(self, payload):
+        if payload.message_id == fight.id:
+            if payload.user_id != self.bot.user.id:
+                guild = self.bot.get_guild(payload.guild_id)#取得server id
+                role = guild.get_role(742364064369475644)#取得role資料
+                await payload.member.add_roles(role)#給予role
+                await payload.member.send('報名內戰成功')
+    
+    @commands.Cog.listener()
+    async def on_raw_reaction_remove(self, payload):
+        if payload.message_id == fight.id:
+            if payload.user_id != self.bot.user.id:
+                guild = self.bot.get_guild(payload.guild_id)#取得server id
+                role = guild.get_role(742364064369475644)#取得role資料
+                user = guild.get_member(payload.user_id)
+                await user.remove_roles(role)#移除role
+                await user.send('退出內戰成功')
+
 def setup(bot):
     bot.add_cog(Fun(bot))
