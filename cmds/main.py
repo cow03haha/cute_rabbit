@@ -6,6 +6,7 @@ import datetime
 import pytz
 
 class Main(Cog_Extension):
+    '''基本指令'''
     #ping指令(discord給的單位為秒，直接乘於1000得到毫秒(ms)，在用round取整數)
     @commands.command()
     async def ping(self, ctx):
@@ -19,7 +20,7 @@ class Main(Cog_Extension):
         await ctx.send(msg)
     
     @commands.command()
-    async def about(self, ctx):
+    async def info(self, ctx):
         '''bot資訊'''
         tw = pytz.timezone('Asia/Taipei')
         embed=discord.Embed(title="about", description="開心莊園專用bot", color=0xf5ed00, timestamp=datetime.datetime.now(tz=tw))
