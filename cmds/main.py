@@ -48,8 +48,7 @@ class Main(Cog_Extension):
     async def time(self, ctx):
         '''顯示現在的時間。'''
         tw = pytz.timezone('Asia/Taipei')
-        time = datetime.datetime.now(tz=tw)
-        time = time.strftime("%H:%M:%S")
+        time = datetime.datetime.now(tz=tw).strftime("%H:%M:%S")
         await ctx.send(f'現在的時間是 {time}')
 
     @commands.command()
