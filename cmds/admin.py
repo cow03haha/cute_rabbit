@@ -2,6 +2,9 @@ import discord
 from discord.ext import commands
 from cores.classes import Cog_Extension
 from bot import bcdata
+import asyncio
+import json
+import datetime
 
 class Admin(Cog_Extension):
     '''管理指令'''
