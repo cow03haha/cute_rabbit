@@ -1,8 +1,21 @@
 {
-    "token" : "NjIwMTc2NTg1Mzk1NDA0ODMw.XXS-dA.C4rvHYbRKT2rliAcy3K1zW3bVig",
-    "test_token" : "NzQyMzQ1NDUxNjY3MTkzOTM5.XzExEw.9PQmtS12N6iV3_4M89X3MNiYsjw",
-    "join_channel" : "620192290547433492",
-    "leave_channel" : "620192290547433492",
-    "info_pic" : "C:\\Users\\cow03\\Desktop\\python\\dc-bot\\cow03haha\\pics\\18.png",
-    "cow_msg" : ["安安", "hello", "叫我嗎?", "owo", ":3", ":heart:"]
+    "token": "NjIwMTc2NTg1Mzk1NDA0ODMw.XXS-dA.C4rvHYbRKT2rliAcy3K1zW3bVig",
+    "test_token": "NzQyMzQ1NDUxNjY3MTkzOTM5.XzExEw.9PQmtS12N6iV3_4M89X3MNiYsjw",
+    "join_channel": "620192290547433492",
+    "leave_channel": "620192290547433492",
+    "info_pic": "C:\\Users\\cow03\\Desktop\\python\\dc-bot\\cow03haha\\pics\\18.png",
+    "cow_msg": [
+        "\u5b89\u5b89",
+        "hello",
+        "\u53eb\u6211\u55ce?",
+        "owo",
+        ":3",
+        ":heart:"
+    ],
+    "task_time": "08121530",
+    "str_time": "08122100",
+    "end_time": "0",
+    "fight_counter": "1",
+    "fight_process": "0",
+    "fight_users" : ""
 }
