@@ -5,7 +5,8 @@ from bot import bcdata, imgs
 import random
 import os
 import datetime
-import pytz 
+import pytz
+import json
 
 class Fun(Cog_Extension):
     '''娛樂指令'''
@@ -39,17 +40,84 @@ class Fun(Cog_Extension):
 
     @commands.has_role(612613325766787072)
     @commands.command()
-    async def 內戰(self, ctx, str_time, end_time):
-        '''傳說區內戰用'''
-        #<@&670280115556712458>
+    async def 內戰(self, ctx, str_time, end_time, *, description):
+        '''傳說區內戰用。用法詳情請使用/hlep 內戰
+        用法：/內戰 開始時間 報名截止時間 備註
+        ex. /內戰 08301800 08301730 無
+        表示內戰將於8月30號18點開始，於8月30號17點30分截止報名'''
+        if len(str_time) != 8 or len(end_time) != 8:
+            await ctx.send('請輸入正確的時間格式')
+            return
+
+        with open('settings.json', 'r', encoding='utf8') as bcfile:
+            bcdata =json.load(bcfile)
+        if bcdata['fight_process'] == '1':
+            await ctx.send('一次只能舉辦一個內戰')
+            return
+
+        
+        bcdata['fight_counter'] = '0'
+        with open('settings.json', 'w', encoding='utf8') as bcfile:
+            json.dump(bcdata, bcfile, indent=4)
+        
+        with open('settings.json', 'r', encoding='utf8') as bcfile:
+            bcdata =json.load(bcfile)
+        bcdata['fight_process'] = '1'
+        with open('settings.json', 'w', encoding='utf8') as bcfile:
+            json.dump(bcdata, bcfile, indent=4)
+
+        with open('settings.json', 'r', encoding='utf8') as bcfile:
+            bcdata =json.load(bcfile)
+        bcdata['str_time'] = str_time
+        with open('settings.json', 'w', encoding='utf8') as bcfile:
+            json.dump(bcdata, bcfile, indent=4)
+        
+        with open('settings.json', 'r', encoding='utf8') as bcfile:
+            bcdata =json.load(bcfile)
+        bcdata['end_time'] = end_time
+        with open('settings.json', 'w', encoding='utf8') as bcfile:
+            json.dump(bcdata, bcfile, indent=4)
+
         tw = pytz.timezone('Asia/Taipei')
-        embed=discord.Embed(title="內戰調查", description="增加任意表情來報名參加", colour=ctx.author.colour, timestamp=datetime.datetime.now(tz=tw))
+        embed=discord.Embed(title="內戰調查", description="在這則訊息增加任意表情符號來報名參加", colour=ctx.author.colour, timestamp=datetime.datetime.now(tz=tw))
         embed.set_author(name=ctx.author, icon_url=str(ctx.author.avatar_url))
-        embed.add_field(name="內戰開始時間:", value=str_time, inline=True)
-        embed.add_field(name="報名截止時間:", value=end_time, inline=True)
+        
+        m = str_time[:2]
+        d = str_time[2:4]
+        H = str_time[4:6]
+        M = str_time[6:]
+        embed.add_field(name="內戰開始時間:", value=f'{m}-{d} {H}:{M}', inline=True)
+        
+        m = end_time[:2]
+        d = end_time[2:4]
+        H = end_time[4:6]
+        M = end_time[6:]
+        embed.add_field(name="報名截止時間:", value=f'{m}-{d} {H}:{M}', inline=True)
+        
+        embed.add_field(name="備註:", value=description, inline=False)
         global fight
         fight = await ctx.send(embed=embed)
         await fight.add_reaction('✅')
+    
+    @commands.command()
+    async def 取消內戰(self, ctx):
+        '''取消內戰(限管理員使用)'''
+        with open('settings.json', 'r', encoding='utf8') as bcfile:
+            bcdata =json.load(bcfile)
+        if bcdata['fight_process'] == "0":
+            await ctx.send('沒有正在舉辦中的內戰')
+            return
+
+        with open('settings.json', 'r', encoding='utf8') as bcfile:
+            bcdata =json.load(bcfile)
+        bcdata['fight_process'] = '0'
+        bcdata['str_time'] = '0'
+        bcdata['end_time'] = '0'
+        with open('settings.json', 'w', encoding='utf8') as bcfile:
+            json.dump(bcdata, bcfile, indent=4)
+        
+        await fight.delete()
+        await ctx.send('內戰取消成功')
     
     @commands.Cog.listener()
     async def on_raw_reaction_add(self, payload):
