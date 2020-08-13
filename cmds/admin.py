@@ -17,12 +17,12 @@ class Admin(Cog_Extension):
         role = member.guild.get_role(int(bcdata['guest_role']))
         await member.add_roles(role)
         await member.send(f'歡迎來到{member.guild}~\n新人請一定要看 <#612592834884796436> 跟 <#623149304529289225> \n之後按照上面的指示來驗證以正式加入本群')
-
+'''
         tw = pytz.timezone('Asia/Taipei')
         embed=discord.Embed(title=" ", description="----歡迎新的小夥伴{mention}來到{guild}----\n\n新人請到 <#612592834884796436> 來了解本群規則\n然後再到 <#623149304529289225> 完成驗證來加入該群喔~\n驗證完後請到 <#612551316346109983> 領取自己有玩的遊戲的身分組(驗證完後才會看到\n時不時也可以到 <#613004916079853581> 獲取本群最新資訊\n\n------------------------------------------------", color=0xf5ed00, timestamp=datetime.datetime.now(tz=tw))
         embed.set_author(name="牛牛の僕", icon_url="https://imgur.com/za5ATTg.jpg")
         await channel.send(embed=embed)
-
+'''
     #member退出
     '''
     @commands.Cog.listener()
