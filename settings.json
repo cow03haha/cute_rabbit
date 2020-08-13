@@ -1,8 +1,10 @@
 {
     "token": "NjIwMTc2NTg1Mzk1NDA0ODMw.XXS-dA.C4rvHYbRKT2rliAcy3K1zW3bVig",
     "test_token": "NzQyMzQ1NDUxNjY3MTkzOTM5.XzExEw.9PQmtS12N6iV3_4M89X3MNiYsjw",
-    "join_channel": "620192290547433492",
-    "leave_channel": "620192290547433492",
+    "welcome_channel": "574605866515562526",
+    "leave_channel": "",
+    "guest_role" : "612593772638765056",
+    "newer_role" : "574813226907205632",
     "info_pic": "C:\\Users\\cow03\\Desktop\\python\\dc-bot\\cow03haha\\pics\\18.png",
     "cow_msg": [
         "\u5b89\u5b89",
