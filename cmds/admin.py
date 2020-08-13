@@ -44,7 +44,7 @@ class Admin(Cog_Extension):
 
         elif msg.content != '同意' and msg.author != self.bot.user and msg.channel.id == int(bcdata['auth_channel']):
             await msg.delete()
-            await msg.channel.send('驗證失敗，請再看仔細一點！', delete_after=3)
+            await msg.channel.send('驗證失敗，請再看仔細一點！', delete_after=5)
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
