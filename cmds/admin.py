@@ -13,7 +13,7 @@ class Admin(Cog_Extension):
     @commands.Cog.listener()
     async def on_member_join(self, member):
         #print(f'{member} 加入了牛牛神殿')
-        channel = member.guild.get_channel(int(bcdata['welcome_channel']))
+        #channel = member.guild.get_channel(int(bcdata['welcome_channel']))
         role = member.guild.get_role(int(bcdata['guest_role']))
         today = datetime.datetime.now().strftime('%Y-%m-%d')
         await member.add_roles(role)
