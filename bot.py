@@ -22,6 +22,7 @@ imgs = [os.path.join(dn, path) for path in imgs]
 async def on_ready():
     print('bot online!')
     await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="青青草原"))
+    
 #檢查所有者
 def check_owner(ctx):
     return ctx.message.author.id == 315414910689476609
