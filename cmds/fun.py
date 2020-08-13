@@ -120,7 +120,7 @@ class Fun(Cog_Extension):
         await fight.delete()
         await ctx.send('內戰取消成功')
     
-    @commands.Cog.listener()
+    '''@commands.Cog.listener()
     async def on_raw_reaction_add(self, payload):
         if payload.message_id == fight.id:
             if payload.user_id != self.bot.user.id:
@@ -137,7 +137,7 @@ class Fun(Cog_Extension):
                 role = guild.get_role(742364064369475644)#取得role資料
                 user = guild.get_member(payload.user_id)
                 await user.remove_roles(role)#移除role
-                await user.send('退出內戰成功')
+                await user.send('退出內戰成功')'''
 
 def setup(bot):
     bot.add_cog(Fun(bot))
