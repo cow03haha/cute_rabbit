@@ -15,8 +15,13 @@ class Admin(Cog_Extension):
         #print(f'{member} 加入了牛牛神殿')
         channel = member.guild.get_channel(int(bcdata['welcome_channel']))
         role = member.guild.get_role(int(bcdata['guest_role']))
+        today = datetime.datetime.now().strftime('%Y-%m-%d')
         await member.add_roles(role)
-        await member.send(f'歡迎來到{member.guild}~\n新人請一定要看 <#612592834884796436> 跟 <#623149304529289225> \n之後按照上面的指示來驗證以正式加入本群\n')
+
+        embed=discord.Embed(title=" ", description=f'歡迎來到{member.guild}~\n新人請一定要看 <#612592834884796436> 跟 <#623149304529289225> \n之後按照上面的指示來驗證以正式加入本群\n', color=0xf5ed00)
+        embed.set_author(name="牛牛の僕", icon_url="https://imgur.com/za5ATTg.jpg")
+        embed.set_footer(text=today)
+        await channel.send(embed=embed)
 
         #tw = pytz.timezone('Asia/Taipei')
         #embed=discord.Embed(title=" ", description="----歡迎新的小夥伴{mention}來到{guild}----\n\n新人請到 <#612592834884796436> 來了解本群規則\n然後再到 <#623149304529289225> 完成驗證來加入該群喔~\n驗證完後請到 <#612551316346109983> 領取自己有玩的遊戲的身分組(驗證完後才會看到\n時不時也可以到 <#613004916079853581> 獲取本群最新資訊\n\n------------------------------------------------", color=0xf5ed00, timestamp=datetime.datetime.now(tz=tw))
@@ -40,7 +45,11 @@ class Admin(Cog_Extension):
             newer = msg.guild.get_role(int(bcdata['newer_role']))
             await msg.author.add_roles(newer)
             await msg.author.remove_roles(guest)
-            await msg.author.send(f'恭喜你正式加入本群:)\n記得觀看 <#613004916079853581> 來獲取更多資訊\n如果你是discord新手的話也歡迎參考<#623079544227889182>\n關於bot的使用請參考<#613333035659558922>並在對應的頻道使用\n(這是自動訊息請勿回覆,如有問題請直接私訊管理員)')
+
+            embed=discord.Embed(title=" ", description=f'恭喜你正式加入本群:)\n記得觀看 <#613004916079853581> 來獲取更多資訊\n如果你是discord新手的話也歡迎參考<#623079544227889182>\n關於bot的使用請參考<#613333035659558922>並在對應的頻道使用\n(這是自動訊息請勿回覆,如有問題請直接私訊管理員)', color=0xf5ed00)
+            embed.set_author(name="牛牛の僕", icon_url="https://imgur.com/za5ATTg.jpg")
+            embed.set_footer(text=today)
+            await channel.send(embed=embed)
 
         elif msg.content != '同意' and msg.author != self.bot.user and msg.channel.id == int(bcdata['auth_channel']):
             await msg.delete()
