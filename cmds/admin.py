@@ -108,6 +108,13 @@ class Admin(Cog_Extension):
                 role = guild.get_role(672669628018982912)#取得role資料
                 await payload.member.add_roles(role)#給予role
                 await payload.member.send(f'領取 **{role}** 身分組成功\n記得去 <#672670934234038272> 看看喔')
+        #DJ
+        if payload.message_id == 719415779233235045:
+            if str(payload.emoji) == '🎵':
+                guild = self.bot.get_guild(payload.guild_id)#取得server id
+                role = guild.get_role(719415296045219881)#取得role資料
+                await payload.member.add_roles(role)#給予role
+                await payload.member.send(f'領取 **{role}** 身分組成功')
     
     @commands.Cog.listener()
     async def on_raw_reaction_remove(self, payload):
@@ -196,6 +203,14 @@ class Admin(Cog_Extension):
             if str(payload.emoji) == '💬':
                 guild = self.bot.get_guild(payload.guild_id)#取得server id
                 role = guild.get_role(672669628018982912)#取得role資料
+                user = guild.get_member(payload.user_id)
+                await user.remove_roles(role)#移除role
+                await user.send(f'移除 **{role}** 身分組成功')
+        #dj
+        if payload.message_id == 719415779233235045:
+            if str(payload.emoji) == '🎵':
+                guild = self.bot.get_guild(payload.guild_id)#取得server id
+                role = guild.get_role(719415296045219881)#取得role資料
                 user = guild.get_member(payload.user_id)
                 await user.remove_roles(role)#移除role
                 await user.send(f'移除 **{role}** 身分組成功')
