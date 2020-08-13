@@ -17,7 +17,7 @@ class Task(Cog_Extension):
                 await asyncio.sleep(5)
             
         self.bg_task = self.bot.loop.create_task(interval())
-        '''
+        
         self.counter = 0
 
         async def fight_task():
@@ -63,8 +63,6 @@ class Task(Cog_Extension):
 
         with open('settings.json', 'w', encoding='utf8') as bcfile:
             json.dump(bcdata, bcfile, indent=4)
-
-    
-
+'''
 def setup(bot):
     bot.add_cog(Task(bot))
