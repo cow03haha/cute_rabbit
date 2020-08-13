@@ -33,7 +33,6 @@ class Admin(Cog_Extension):
     async def on_raw_reaction_add(self, payload):
         #PC
         if payload.message_id == 612553821528391702:
-            print(str(payload.emoji))
             if str(payload.emoji) == '🖥':
                 guild = self.bot.get_guild(payload.guild_id)#取得server id
                 role = guild.get_role(614812329258778635)#取得role資料
