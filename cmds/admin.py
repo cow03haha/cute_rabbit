@@ -13,7 +13,7 @@ class Admin(Cog_Extension):
     @commands.Cog.listener()
     async def on_member_join(self, member):
         #print(f'{member} 加入了牛牛神殿')
-        channel = member.guild.get_channel(620185846196469761)
+        channel = member.guild.get_channel(int(bcdata['welcome_channel']))
         role = member.guild.get_role(int(bcdata['guest_role']))
         await member.add_roles(role)
         await member.send(f'歡迎來到{member.guild}~\n新人請一定要看 <#612592834884796436> 跟 <#623149304529289225> \n之後按照上面的指示來驗證以正式加入本群')
