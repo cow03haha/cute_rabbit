@@ -99,6 +99,7 @@ class Fun(Cog_Extension):
         fight = await ctx.send(embed=embed)
         await fight.add_reaction('✅')
     
+    @commands.has_role(612613325766787072)
     @commands.command()
     async def 取消內戰(self, ctx):
         '''取消內戰(限管理員使用)'''
