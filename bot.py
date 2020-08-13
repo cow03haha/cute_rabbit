@@ -21,6 +21,8 @@ imgs = [os.path.join(dn, path) for path in imgs]
 @bot.event
 async def on_ready():
     print('bot online!')
+    game = discord.Game("with the API")
+    await bot.change_presence(status=discord.Status.idle, activity=game)
 
 #檢查所有者
 def check_owner(ctx):
