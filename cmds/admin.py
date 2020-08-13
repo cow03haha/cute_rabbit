@@ -34,7 +34,7 @@ class Admin(Cog_Extension):
     #驗證系統 
     @commands.Cog.listener()
     async def on_message(self, msg):
-        if msg.content == '同意' and msg.author != self.bot.user and msg.channel.id == 743319742349049907:
+        if msg.content == '同意' and msg.author != self.bot.user and msg.channel.id == int(bcdata['auth_channel']):
             await msg.delete()
             guest = msg.guild.get_role(int(bcdata['guest_tole']))
             newer = msg.guild.get_role(int(bcdata['newer_tole']))
@@ -42,7 +42,7 @@ class Admin(Cog_Extension):
             await msg.author.remove_roles(guest)
             await msg.author.send(f'恭喜你正式加入本群:)\n記得觀看 <#613004916079853581> 來獲取更多資訊\n如果你是discord新手的話也歡迎參考<#623079544227889182>\n關於bot的使用請參考<#613333035659558922>並在對應的頻道使用\n(這是自動訊息請勿回覆,如有問題請直接私訊管理員)')
 
-        elif msg.content != '同意' and msg.author != self.bot.user and msg.channel.id == 743319742349049907:
+        elif msg.content != '同意' and msg.author != self.bot.user and msg.channel.id == int(bcdata['auth_channel']):
             await msg.delete()
             await msg.channel.send('驗證失敗，請再看仔細一點！', delete_after=3)
 
