@@ -23,7 +23,7 @@ class Fun(Cog_Extension):
     async def on_message(self, msg):
         if msg.content.endswith('牛牛') and msg.author != self.bot.user and msg.author != 504892813192986628:
             await msg.channel.send(random.choice(bcdata['cow_msg']))
-        else:
+        elif msg.content.endswith('牛牛') and msg.author != self.bot.user:
             await msg.channel.send('不給你用')
     @commands.command()
     async def 抽籤(self, ctx):
