@@ -1,7 +1,6 @@
 import discord
 from discord.ext import commands
 from cores.classes import Cog_Extension
-from .fun import fight
 import asyncio
 import json
 import datetime
