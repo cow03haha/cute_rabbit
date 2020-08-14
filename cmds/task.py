@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 from cores.classes import Cog_Extension
+from .fun import fight
 import asyncio
 import json
 import datetime
@@ -8,8 +9,8 @@ import datetime
 class Task(Cog_Extension):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        '''
-        async def interval():
+        
+        '''async def interval():
             await self.bot.wait_until_ready()
             self.channel = self.bot.get_channel(741685158335479950)
             while not self.bot.is_closed():
@@ -18,11 +19,11 @@ class Task(Cog_Extension):
             
         self.bg_task = self.bot.loop.create_task(interval())
         
-        self.counter = 0
+        #self.counter = 0
 
         async def fight_task():
             await self.bot.wait_until_ready()
-            self.channel = self.bot.get_channel(742717259847434275)
+            self.role = fight.guild.get_role(743668426383294495)
             while not self.bot.is_closed():
                 now_time = datetime.datetime.now().strftime('%m%d%H%M')
                 
@@ -30,8 +31,10 @@ class Task(Cog_Extension):
                     bcdata = json.load(bcfile)
                 
                 if now_time == bcdata['end_time'] and bcdata['fight_counter'] == '0':
+                    print('1')
                     now_time = datetime.datetime.now().strftime('%m-%d %H:%M')
-                    await self.channel.send(f'內戰已於{now_time}截止報名')
+                    await fight.channel.send(f'內戰已於{now_time}截止報名')
+
                     with open('settings.json', 'r', encoding='utf8') as bcfile:
                         bcdata =json.load(bcfile)
                     bcdata['fight_counter'] = '1'
@@ -39,6 +42,13 @@ class Task(Cog_Extension):
                     bcdata['end_time'] = '0'
                     with open('settings.json', 'w', encoding='utf8') as bcfile:
                         json.dump(bcdata, bcfile, indent=4)
+
+                    await fight.channel.send('開始隨機分組...')
+
+                    users = self.role.members.id
+                    print(users)
+                    with open('settings.json', 'w', encoding='utf8') as bcfile:
+                        json.dump(str(users), bcfile, indent=4)
 
                     await asyncio.sleep(1)
                 else:
@@ -62,7 +72,7 @@ class Task(Cog_Extension):
         bcdata['task_time'] = time
 
         with open('settings.json', 'w', encoding='utf8') as bcfile:
-            json.dump(bcdata, bcfile, indent=4)
-'''
+            json.dump(bcdata, bcfile, indent=4)'''
+
 def setup(bot):
     bot.add_cog(Task(bot))
