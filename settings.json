@@ -3,9 +3,9 @@
     "test_token": "NzQyMzQ1NDUxNjY3MTkzOTM5.XzExEw.9PQmtS12N6iV3_4M89X3MNiYsjw",
     "welcome_channel": "574605866515562526",
     "leave_channel": "",
-    "guest_role" : "612593772638765056",
-    "newer_role" : "574813226907205632",
-    "auth_channel" : "623149304529289225",
+    "guest_role": "612593772638765056",
+    "newer_role": "574813226907205632",
+    "auth_channel": "623149304529289225",
     "info_pic": "C:\\Users\\cow03\\Desktop\\python\\dc-bot\\cow03haha\\pics\\18.png",
     "cow_msg": [
         "\u5b89\u5b89",
@@ -15,10 +15,16 @@
         ":3",
         ":heart:"
     ],
-    "task_time": "08121530",
-    "str_time": "08122100",
+    "task_time": "",
+    "str_time": "08142300",
     "end_time": "0",
+    "fight_guild" : "620185843822231572",
+    "fight_channel" : "620185846196469761",
     "fight_counter": "1",
     "fight_process": "0",
-    "fight_users" : ""
+    "fight_users": "",
+    "fight_weight": "",
+    "squad_user": "",
+    "squad_weight": "",
+    "fihgt_users": ""
 }
