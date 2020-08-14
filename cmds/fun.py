@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 from cores.classes import Cog_Extension
-from bot import bcdata, imgs
+from bot import bcdata
 import random
 import os
 import datetime
@@ -15,12 +15,21 @@ class Fun(Cog_Extension):
     @commands.command()
     async def meme(self, ctx):
         '''隨機梗圖。'''
+        #導入梗圖路徑(list)
+        dn = os.path.dirname('..')
+        dn = os.path.join(dn, 'meme')
+        imgs = os.listdir(dn)
+        imgs = [os.path.join(dn, path) for path in imgs]
+
         random_pic = random.choice(imgs)
         pic = discord.File(random_pic)#發送檔案的處理方式
         await ctx.send(file = pic)#用file來定要發送檔案
     
     @commands.Cog.listener()
     async def on_message(self, msg):
+        if msg.author == self.bot.user:
+            return
+
         if msg.content.endswith('牛牛') and msg.author != self.bot.user:
             await msg.channel.send(random.choice(bcdata['cow_msg']))
             
@@ -41,7 +50,7 @@ class Fun(Cog_Extension):
     @commands.has_role(612613325766787072)
     @commands.command()
     async def 內戰(self, ctx, str_time, end_time, *, description):
-        '''傳說區內戰用。用法詳情請使用/hlep 內戰
+        '''傳說區內戰用。用法詳情請使用/help 內戰
         用法：/內戰 開始時間 報名截止時間 備註
         ex. /內戰 08301800 08301730 無
         表示內戰將於8月30號18點開始，於8月30號17點30分截止報名'''
@@ -55,7 +64,6 @@ class Fun(Cog_Extension):
             await ctx.send('一次只能舉辦一個內戰')
             return
 
-        
         bcdata['fight_counter'] = '0'
         with open('settings.json', 'w', encoding='utf8') as bcfile:
             json.dump(bcdata, bcfile, indent=4)
@@ -125,7 +133,7 @@ class Fun(Cog_Extension):
         if payload.message_id == fight.id:
             if payload.user_id != self.bot.user.id:
                 guild = self.bot.get_guild(payload.guild_id)#取得server id
-                role = guild.get_role(742364064369475644)#取得role資料
+                role = guild.get_role(743668426383294495)#取得role資料
                 await payload.member.add_roles(role)#給予role
                 await payload.member.send('報名內戰成功')
     
@@ -134,7 +142,7 @@ class Fun(Cog_Extension):
         if payload.message_id == fight.id:
             if payload.user_id != self.bot.user.id:
                 guild = self.bot.get_guild(payload.guild_id)#取得server id
-                role = guild.get_role(742364064369475644)#取得role資料
+                role = guild.get_role(743668426383294495)#取得role資料
                 user = guild.get_member(payload.user_id)
                 await user.remove_roles(role)#移除role
                 await user.send('退出內戰成功')'''
