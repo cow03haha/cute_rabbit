@@ -61,7 +61,7 @@ class Admin(Cog_Extension):
     async def clear(self, ctx, count:int):
         '''清理當前頻道的訊息。用法：/clear 數量'''
         await ctx.message.delete()
-        await ctx.channel.purge(limit=count)
+        await ctx.channel.purge(limit=count, bulk=True)
         await ctx.send(f'清理{count}條訊息成功', delete_after=3)
     
     @commands.command()
@@ -76,7 +76,7 @@ class Admin(Cog_Extension):
         else:
             hour = hour-8
         time = datetime.datetime(year=year, month=month, day=day, hour=hour, minute=minute)
-        await ctx.channel.purge(after=time)
+        await ctx.channel.purge(after=time, bulk=True)
         if hour+8 > 24:
             day = day+1
             hour = hour+8-24
