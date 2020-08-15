@@ -64,6 +64,27 @@ class Admin(Cog_Extension):
         await ctx.channel.purge(limit=count)
         await ctx.send(f'清理{count}條訊息成功', delete_after=3)
     
+    @commands.command()
+    @commands.has_permissions(manage_messages=True)
+    async def clearafter(self, ctx, year: int,month: int,day: int, hour: int,minute: int):
+        '''清理當前頻道特定時間後的訊息。用法：/clear 年 月 日 小時 分鐘
+        ex. /clearafter 2020 8 11 14 30'''
+        await ctx.message.delete()
+        if hour < 8:
+            day = day-1
+            hour = 24+hour-8
+        else:
+            hour = hour-8
+        time = datetime.datetime(year=year, month=month, day=day, hour=hour, minute=minute)
+        await ctx.channel.purge(after=time)
+        if hour+8 > 24:
+            day = day+1
+            hour = hour+8-24
+        else:
+            hour = hour+8
+        time = datetime.datetime(year=year, month=month, day=day, hour=hour, minute=minute)
+        await ctx.send(f'清理{time}之後的訊息成功', delete_after=3)
+    
     #recation role
     @commands.Cog.listener()
     async def on_raw_reaction_add(self, payload):
