@@ -22,7 +22,13 @@ class Task(Cog_Extension):
 
         async def fight_task():
             await self.bot.wait_until_ready()
-            self.role = fight.guild.get_role(743668426383294495)
+
+            with open('settings.json', 'r', encoding='utf8') as bcfile:
+                        bcdata =json.load(bcfile)
+            self.guild = self.bot.get_guild(int(bcdata['fight_guild']))
+            self.channel = self.guild.get_channel(int(bcdata['fight_channel']))
+            self.role = self.guild.get_role(743668426383294495)
+            
             while not self.bot.is_closed():
                 now_time = datetime.datetime.now().strftime('%m%d%H%M')
                 
@@ -32,7 +38,7 @@ class Task(Cog_Extension):
                 if now_time == bcdata['end_time'] and bcdata['fight_counter'] == '0':
                     print('1')
                     now_time = datetime.datetime.now().strftime('%m-%d %H:%M')
-                    await fight.channel.send(f'內戰已於{now_time}截止報名')
+                    await self.channel.send(f'內戰已於{now_time}截止報名')
 
                     with open('settings.json', 'r', encoding='utf8') as bcfile:
                         bcdata =json.load(bcfile)
@@ -42,7 +48,7 @@ class Task(Cog_Extension):
                     with open('settings.json', 'w', encoding='utf8') as bcfile:
                         json.dump(bcdata, bcfile, indent=4)
 
-                    await fight.channel.send('開始隨機分組...')
+                    await self.channel.send('開始隨機分組...')
 
                     users = self.role.members.id
                     print(users)
