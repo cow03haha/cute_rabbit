@@ -39,17 +39,50 @@ class Main(Cog_Extension):
     @commands.check(check_owner)
     @commands.command()
     
-    async def says(self, ctx, channel, *, msg):
+    async def says(self, ctx, channel: int, *, msg):
         '''在特定頻道傳訊息。用法：/says 頻道id 要說的話'''
-        channel = self.bot.get_channel(int(channel))
+        channel = self.bot.get_channel(channel)
         await channel.send(msg)
 
     @commands.command()
-    async def time(self, ctx):
-        '''顯示現在的時間。'''
-        tw = pytz.timezone('Asia/Taipei')
-        time = datetime.datetime.now(tz=tw).strftime("%H:%M:%S")
-        await ctx.send(f'現在的時間是 {time}')
+    async def time(self, ctx, tz):
+        '''顯示現在的時間。用法：/time 時區，詳細時區列表請參考/help time
+        日本 = jp
+        台灣 = tw
+        美國(中部) = us_mid
+        美國(西岸) = us_west
+        美國(東岸) = us_east
+        英國 = uk
+        土耳其 = tk'''
+        if tz == 'tw':
+            time = datetime.datetime.now().strftime("%m-%d %H:%M:%S")
+            await ctx.send(f'現在的台灣時間是 {time}')
+        elif tz == 'jp':
+            tz = pytz.timezone('Asia/Tokyo')
+            time = datetime.datetime.now(tz=tz).strftime("%m-%d %H:%M:%S")
+            await ctx.send(f'現在的日本時間是 {time}')
+        elif tz == 'us_east':
+            tz = pytz.timezone('US/Eastern')
+            time = datetime.datetime.now(tz=tz).strftime("%m-%d %H:%M:%S")
+            await ctx.send(f'現在的美國東岸時間是 {time}')
+        elif tz == 'us_mid':
+            tz = pytz.timezone('US/Central')
+            time = datetime.datetime.now(tz=tz).strftime("%m-%d %H:%M:%S")
+            await ctx.send(f'現在的美國中部時間是 {time}')
+        elif tz == 'us_west':
+            tz = pytz.timezone('US/Pacific')
+            time = datetime.datetime.now(tz=tz).strftime("%m-%d %H:%M:%S")
+            await ctx.send(f'現在的美國西岸時間是 {time}')
+        elif tz == 'uk':
+            tz = pytz.timezone('Etc/GMT+1')
+            time = datetime.datetime.now(tz=tz).strftime("%m-%d %H:%M:%S")
+            await ctx.send(f'現在的英國時間是 {time}')
+        elif tz == 'tk':
+            tz = pytz.timezone('Turkey')
+            time = datetime.datetime.now(tz=tz).strftime("%m-%d %H:%M:%S")
+            await ctx.send(f'現在的土耳其時間是 {time}')
+        else:
+            await ctx.send('請輸入正確的時區!')
 
     @commands.command()
     async def srvinfo(self, ctx):
