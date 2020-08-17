@@ -30,6 +30,7 @@ class Task(Cog_Extension):
                 if now_time == '080000':
                     await self.channel.send('早')
                     await asyncio.sleep(1)
+                    self.bg_task = self.bot.loop.create_task(good_morning())
                 else:
                     await asyncio.sleep(1)
                     pass
