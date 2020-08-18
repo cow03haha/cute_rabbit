@@ -19,7 +19,7 @@ class Main(Cog_Extension):
 
         bot = round((t2 - t) * 1000)
         ws = int(self.bot.latency * 1000)
-        await ctx.send(f'延遲：{bot} 毫秒(ms)\nWebsocket：{ws}')
+        await ctx.send(f'延遲：{bot} 毫秒(ms)\nWebsocket：{ws} 毫秒(ms)')
     
     #鸚鵡
     @commands.command()
