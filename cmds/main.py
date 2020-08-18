@@ -3,6 +3,7 @@ from discord.ext import commands
 from cores.classes import Cog_Extension
 from bot import bcdata, check_owner
 import datetime
+import time
 import pytz
 
 class Main(Cog_Extension):
@@ -11,7 +12,14 @@ class Main(Cog_Extension):
     @commands.command()
     async def ping(self, ctx):
         '''測試延遲。'''
-        await ctx.send(f'延遲：{round(self.bot.latency*1000)} 毫秒(ms)')
+        t = time.perf_counter()
+        await ctx.trigger_typing()
+        t2 = time.perf_counter()
+        await ctx.trigger_typing()
+
+        bot = round((t2 - t) * 1000)
+        ws = int(self.bot.latency * 1000)
+        await ctx.send(f'延遲：{bot} 毫秒(ms)\nWebsocket：{ws}')
     
     #鸚鵡
     @commands.command()
