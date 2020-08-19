@@ -27,7 +27,7 @@ class Fun(Cog_Extension):
     
     @commands.Cog.listener()
     async def on_message(self, msg):
-        if msg.author == self.bot.user:
+        if msg.author.bot:
             return
 
         if msg.content.endswith('牛牛') and msg.author != self.bot.user:
