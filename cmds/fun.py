@@ -33,7 +33,7 @@ class Fun(Cog_Extension):
         if msg.content.endswith('牛牛') and msg.author != self.bot.user:
             await msg.channel.send(random.choice(bcdata['cow_msg']))
             
-    @commands.command()
+    @commands.command(aliases=['抽'])
     async def 抽籤(self, ctx):
         '''試手氣。'''
         fortune = ['大吉', '吉', '小吉', '小凶', '凶', '大凶']
