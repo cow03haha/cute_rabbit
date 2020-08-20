@@ -27,7 +27,7 @@ class Main(Cog_Extension):
         '''你說我回。用法：/say 要說的話'''
         await ctx.send(msg)
     
-    @commands.command()
+    @commands.command(aliases=['about'])
     async def info(self, ctx):
         '''bot資訊。'''
         tw = pytz.timezone('Asia/Taipei')
@@ -52,7 +52,7 @@ class Main(Cog_Extension):
         channel = self.bot.get_channel(channel)
         await channel.send(msg)
 
-    @commands.command()
+    @commands.command(aliases=['date'])
     async def time(self, ctx, tz):
         '''顯示現在的時間。用法：/time 時區，詳細時區列表請參考/help time
         日本 = jp
