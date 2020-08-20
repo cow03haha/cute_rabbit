@@ -14,7 +14,7 @@ bot = commands.Bot(command_prefix='/')
 #bot上線
 @bot.event
 async def on_ready():
-    print('bot online!')
+    print(f'bot {bot.user} online!')
     await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="青青草原"))
     
 #檢查所有者
