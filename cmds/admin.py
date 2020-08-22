@@ -12,6 +12,8 @@ class Admin(Cog_Extension):
     #member加入
     @commands.Cog.listener()
     async def on_member_join(self, member):
+        global newer
+        newer = member
         if member.guild.id == int(bcdata['rabbit_guild']['guild_id']):
             #print(f'{member} 加入了牛牛神殿')
             #channel = member.guild.get_channel(int(bcdata['welcome_channel']))
@@ -25,17 +27,7 @@ class Admin(Cog_Extension):
             embed.set_author(name="牛牛の僕", icon_url="https://imgur.com/za5ATTg.jpg")
             embed.set_footer(text=today)
             await member.send(embed=embed)
-            '''
-            tw = pytz.timezone('Asia/Taipei')
-            embed=discord.Embed(title=" ", description="----歡迎新的小夥伴{mention}來到{guild}----\n\n\
-                                                        新人請到 <#612592834884796436> 來了解本群規則\n\
-                                                        然後再到 <#623149304529289225> 完成驗證來加入該群喔~\n\
-                                                        驗證完後請到 <#612551316346109983> 領取自己有玩的遊戲的身分組(驗證完後才會看到\n\
-                                                        時不時也可以到 <#613004916079853581> 獲取本群最新資訊\n\n\
-                                                        ------------------------------------------------", color=0xf5ed00, timestamp=datetime.datetime.now(tz=tw))
-            embed.set_author(name="牛牛の僕", icon_url="https://imgur.com/za5ATTg.jpg")
-            await channel.send(embed=embed)
-            '''
+        
     #member退出
     '''
     @commands.Cog.listener()
@@ -62,6 +54,17 @@ class Admin(Cog_Extension):
         elif msg.content != '同意' and msg.author != self.bot.user and msg.channel.id == int(bcdata["rabbit_guild"]["auth_channel"]):
             await msg.delete()
             await msg.channel.send(f'{msg.author.mention} 驗證失敗，請再看仔細一點 ༼ ◕д ◕ ༽', delete_after=10)
+        #歡迎訊息
+        if msg.channee.id == int(bcdata['rabbit_guild']['welcome_channel']) and msg.author.id == 276060004262477825:
+            tw = pytz.timezone('Asia/Taipei')
+            embed=discord.Embed(title=" ", description=f'☆歡迎 {newer.mention} 來到Rabbit♡Fairy ☆\n\n\
+                                                        新仁先去 <#743353331363217418> 了解我們的規定\n\
+                                                        再來通過 <#746312391955841074> 即可成為我們的一員\n\
+                                                        這邊 <#743768856853479525> 可以選擇你常玩的遊戲\n\
+                                                        以及你自己喜歡的顏色(ฅ´ω`ฅ) \n\n\
+                                                        ☆♡☆♡☆♡☆♡☆♡☆♡☆♡', color=0xf5ed00, timestamp=datetime.datetime.now(tz=tw))
+            embed.set_author(name="牛牛の僕", icon_url="https://imgur.com/za5ATTg.jpg")
+            await msg.channel.send(embed=embed)
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
