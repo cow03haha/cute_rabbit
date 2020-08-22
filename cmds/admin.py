@@ -21,9 +21,7 @@ class Admin(Cog_Extension):
             today = datetime.datetime.now().strftime('%Y-%m-%d')
             await member.add_roles(role)
 
-            embed=discord.Embed(title=" ", description=f'歡迎來到{member.guild}~\n\
-                                                        記得先看完 <#743353331363217418>\n\
-                                                        之後再按照 <#746312391955841074> 的指示來驗證並正式加入本群\n', color=0xf5ed00)
+            embed=discord.Embed(title=" ", description=f'歡迎來到{member.guild}~\n記得先看完 <#743353331363217418>\n之後再按照 <#746312391955841074> 的指示來驗證並正式加入本群\n', color=0xf5ed00)
             embed.set_author(name="牛牛の僕", icon_url="https://imgur.com/za5ATTg.jpg")
             embed.set_footer(text=today)
             await member.send(embed=embed)
@@ -45,9 +43,7 @@ class Admin(Cog_Extension):
             await msg.author.remove_roles(guest)
 
             tw = pytz.timezone('Asia/Taipei')
-            embed=discord.Embed(title=" ", description=f'恭喜你正式加入本群:)\n\
-                                                        記得去 <#743854911078531219> 領取身分組\n\
-                                                        (這是自動息請勿回覆,如有問題請直接私訊管理員)', color=0xf5ed00, timestamp=datetime.datetime.now(tz=tw))
+            embed=discord.Embed(title=" ", description=f'恭喜你正式加入本群:)\n記得去 <#743854911078531219> 領取身分組\n(這是自動息請勿回覆,如有問題請直接私訊管理員)', color=0xf5ed00, timestamp=datetime.datetime.now(tz=tw))
             embed.set_author(name="牛牛の僕", icon_url="https://imgur.com/za5ATTg.jpg")
             await msg.author.send(embed=embed)
 
@@ -57,7 +53,7 @@ class Admin(Cog_Extension):
         #歡迎訊息
         if msg.channel.id == int(bcdata['rabbit_guild']['welcome_channel']) and msg.author.id == 276060004262477825:
             tw = pytz.timezone('Asia/Taipei')
-            embed=discord.Embed(title=" ", description=f'☆歡迎 {newer.mention} 來到Rabbit♡Fairy ☆\n\n新仁先去 <#743353331363217418> 了解我們的規定\n再來通過 <#746312391955841074> 即可成為我們的一員\n這邊 <#743768856853479525> 可以選擇你常玩的遊戲\n以及你自己喜歡的顏色(ฅ´ω`ฅ)\n\n☆♡☆♡☆♡☆♡☆♡☆♡☆♡', color=0xf5ed00, timestamp=datetime.datetime.now(tz=tw))
+            embed=discord.Embed(title=" ", description=f'☆歡迎 {newer.mention} 來到Rabbit♡Fairy ☆\n\n新仁先去 <#743353331363217418> 了解我們的規定\n再來通過 <#746312391955841074> 即可成為我們的一員\n這邊 <#743854911078531219> 可以選擇你常玩的遊戲\n以及你自己喜歡的顏色(ฅ´ω`ฅ)\n\n☆♡☆♡☆♡☆♡☆♡☆♡☆♡', color=0xf5ed00, timestamp=datetime.datetime.now(tz=tw))
             embed.set_author(name="牛牛の僕", icon_url="https://imgur.com/za5ATTg.jpg")
             await msg.channel.send(embed=embed)
 
