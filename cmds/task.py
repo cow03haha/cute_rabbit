@@ -19,7 +19,7 @@ class Task(Cog_Extension):
         self.bg_task = self.bot.loop.create_task(interval())'''
         
         #self.counter = 0
-
+        '''
         async def good_morning():
             await self.bot.wait_until_ready()
             self.channel = self.bot.get_channel(621994307431301130)
@@ -36,7 +36,7 @@ class Task(Cog_Extension):
                     pass
 
         self.bg_task = self.bot.loop.create_task(good_morning())
-
+        '''
         '''async def fight_task():
             await self.bot.wait_until_ready()
 
