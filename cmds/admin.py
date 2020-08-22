@@ -55,7 +55,7 @@ class Admin(Cog_Extension):
             await msg.delete()
             await msg.channel.send(f'{msg.author.mention} 驗證失敗，請再看仔細一點 ༼ ◕д ◕ ༽', delete_after=10)
         #歡迎訊息
-        if msg.channee.id == int(bcdata['rabbit_guild']['welcome_channel']) and msg.author.id == 276060004262477825:
+        if msg.channel.id == int(bcdata['rabbit_guild']['welcome_channel']) and msg.author.id == 276060004262477825:
             tw = pytz.timezone('Asia/Taipei')
             embed=discord.Embed(title=" ", description=f'☆歡迎 {newer.mention} 來到Rabbit♡Fairy ☆\n\n\
                                                         新仁先去 <#743353331363217418> 了解我們的規定\n\
