@@ -1,11 +1,13 @@
 {
     "token": "NjIwMTc2NTg1Mzk1NDA0ODMw.XXS-dA.C4rvHYbRKT2rliAcy3K1zW3bVig",
     "test_token": "NzQyMzQ1NDUxNjY3MTkzOTM5.XzExEw.9PQmtS12N6iV3_4M89X3MNiYsjw",
-    "welcome_channel": "574605866515562526",
-    "leave_channel": "",
-    "guest_role": "612593772638765056",
-    "newer_role": "574813226907205632",
-    "auth_channel": "623149304529289225",
+    "rabbit_guild" : {
+        "guild_id" : "743292989790748812",
+        "welcome_channel": "743292989790748815",
+        "leave_channel": "",
+        "guest_role": "746312371353419807",
+        "auth_channel": "746312391955841074"
+    },
     "info_pic": "C:\\Users\\cow03\\Desktop\\python\\dc-bot\\cow03haha\\pics\\18.png",
     "cow_msg": [
         "\u5b89\u5b89",
@@ -14,17 +16,5 @@
         "owo",
         ":3",
         ":heart:"
-    ],
-    "task_time": "",
-    "str_time": "08162100",
-    "end_time": "0",
-    "fight_guild": "620185843822231572",
-    "fight_channel": "620185846196469761",
-    "fight_counter": "1",
-    "fight_process": "0",
-    "fight_users": "",
-    "fight_weight": "",
-    "squad_users": "",
-    "squad_weight": "",
-    "fihgt_users": ""
+    ]
 }
