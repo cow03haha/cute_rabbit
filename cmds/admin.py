@@ -57,12 +57,7 @@ class Admin(Cog_Extension):
         #歡迎訊息
         if msg.channel.id == int(bcdata['rabbit_guild']['welcome_channel']) and msg.author.id == 276060004262477825:
             tw = pytz.timezone('Asia/Taipei')
-            embed=discord.Embed(title=" ", description=f'☆歡迎 {newer.mention} 來到Rabbit♡Fairy ☆\n\n\
-                                                        新仁先去 <#743353331363217418> 了解我們的規定\n\
-                                                        再來通過 <#746312391955841074> 即可成為我們的一員\n\
-                                                        這邊 <#743768856853479525> 可以選擇你常玩的遊戲\n\
-                                                        以及你自己喜歡的顏色(ฅ´ω`ฅ) \n\n\
-                                                        ☆♡☆♡☆♡☆♡☆♡☆♡☆♡', color=0xf5ed00, timestamp=datetime.datetime.now(tz=tw))
+            embed=discord.Embed(title=" ", description=f'☆歡迎 {newer.mention} 來到Rabbit♡Fairy ☆\n\n新仁先去 <#743353331363217418> 了解我們的規定\n再來通過 <#746312391955841074> 即可成為我們的一員\n這邊 <#743768856853479525> 可以選擇你常玩的遊戲\n以及你自己喜歡的顏色(ฅ´ω`ฅ)\n\n☆♡☆♡☆♡☆♡☆♡☆♡☆♡', color=0xf5ed00, timestamp=datetime.datetime.now(tz=tw))
             embed.set_author(name="牛牛の僕", icon_url="https://imgur.com/za5ATTg.jpg")
             await msg.channel.send(embed=embed)
 
