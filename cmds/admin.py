@@ -86,6 +86,17 @@ class Admin(Cog_Extension):
         time = datetime.datetime(year=year, month=month, day=day, hour=hour, minute=minute)
         await ctx.send(f'清理{time}之後的訊息成功', delete_after=3)
     
+    @commands.command()
+    @commands.has_permissions(manage_channels=True)
+    async def voicemoveall(self, ctx, origin: discord.VoiceChannel, target: discord.VoiceChannel, reason="N/A"):
+        """將全部人從一個頻道移到另外一個頻道。用法：/voicemoveall 原本頻道id 目標頻道id"""
+        if ctx.author.guild_permissions.move_members == True:
+            if origin in ctx.guild.voice_channels and target in ctx.guild.voice_channels:
+                for members in origin.members:
+                    await members.edit(voice_channel=target)
+        res = f"把所有成員從 {origin.id} 移動到 {target.mention} 成功"
+        await ctx.send(res)
+
     #recation role
     @commands.Cog.listener()
     async def on_raw_reaction_add(self, payload):
