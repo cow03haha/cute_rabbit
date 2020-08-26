@@ -31,7 +31,7 @@ class Main(Cog_Extension):
     async def info(self, ctx):
         '''bot資訊。'''
         tw = pytz.timezone('Asia/Taipei')
-        embed=discord.Embed(title="about", description="開心莊園專用bot", color=0xf5ed00, timestamp=datetime.datetime.now(tz=tw))
+        embed=discord.Embed(title="about", description="Rabbit♡Fairy專用bot", color=0xf5ed00, timestamp=datetime.datetime.now(tz=tw))
         embed.set_author(name="cow03", icon_url="https://i.imgur.com/QinbCaq.png")
         embed.set_thumbnail(url="https://i.imgur.com/za5ATTg.png")
         embed.add_field(name="作者", value="<@315414910689476609>", inline=True)
