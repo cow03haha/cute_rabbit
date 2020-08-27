@@ -1,0 +1,20 @@
+{
+    "token": "your token here",
+    "test_token": "your token2 here",
+    "rabbit_guild" : {
+        "guild_id" : "743292989790748812",
+        "welcome_channel": "743292989790748815",
+        "leave_channel": "",
+        "guest_role": "746312371353419807",
+        "auth_channel": "746312391955841074"
+    },
+    "info_pic": "C:\\Users\\cow03\\Desktop\\python\\dc-bot\\cow03haha\\pics\\18.png",
+    "cow_msg": [
+        "\u5b89\u5b89",
+        "hello",
+        "\u53eb\u6211\u55ce?",
+        "owo",
+        ":3",
+        ":heart:"
+    ]
+}
