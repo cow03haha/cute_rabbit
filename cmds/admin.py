@@ -101,23 +101,71 @@ class Admin(Cog_Extension):
     @commands.Cog.listener()
     async def on_raw_reaction_add(self, payload):
         #reaction role example
-        if payload.message_id == 612553821528391702:
-            if str(payload.emoji) == '🖥':
+        if payload.message_id == 746320857516998816:
+            if str(payload.emoji) == '<:AOVicon:747125830186041345>':
                 guild = self.bot.get_guild(payload.guild_id)#取得server id
-                role = guild.get_role(614812329258778635)#取得role資料
+                role = guild.get_role(745851285621702687)#取得role資料
+                channel = guild.get_channel(743316291296690216)#取得channel資料
                 await payload.member.add_roles(role)#給予role
-                await payload.member.send(f'領取 **{role}** 身分組成功')
+                await channel.send(f'【你踩到兔几的陷阱，掉進了新的區域】\n歡迎【{payload.member.mention}】來到了 {channel.mention} \n送上胡蘿蔔，以示友好☆')
+
+        if payload.message_id == 746320857516998816:
+            if str(payload.emoji) == '<:minecraft_grass:747125831297663057>':
+                guild = self.bot.get_guild(payload.guild_id)#取得server id
+                role = guild.get_role(745851154700959906)#取得role資料
+                channel = guild.get_channel(744791458216935495)#取得channel資料
+                await payload.member.add_roles(role)#給予role
+                await channel.send(f'【你踩到兔几的陷阱，掉進了新的區域】\n歡迎【{payload.member.mention}】來到了 {channel.mention} \n送上胡蘿蔔，以示友好☆')
+
+        if payload.message_id == 746320857516998816:
+            if str(payload.emoji) == '<:pubgliteicon:747125830269927495>':
+                guild = self.bot.get_guild(payload.guild_id)#取得server id
+                role = guild.get_role(745850928653008938)#取得role資料
+                channel = guild.get_channel(744792180425621545)#取得channel資料
+                await payload.member.add_roles(role)#給予role
+                await channel.send(f'【你踩到兔几的陷阱，掉進了新的區域】\n歡迎【{payload.member.mention}】來到了 {channel.mention} \n送上胡蘿蔔，以示友好☆')
+
+        if payload.message_id == 746320857516998816:
+            print(1)
+            print(payload.emoji)
+            if str(payload.emoji) == '<:OsuLogo:747128004974477382>':
+                print(2)
+                guild = self.bot.get_guild(payload.guild_id)#取得server id
+                role = guild.get_role(745859173048385561)#取得role資料
+                channel = guild.get_channel(745858655005442118)#取得channel資料
+                await payload.member.add_roles(role)#給予role
+                await channel.send(f'【你踩到兔几的陷阱，掉進了新的區域】\n歡迎【{payload.member.mention}】來到了 {channel.mention} \n送上胡蘿蔔，以示友好☆')
         
     @commands.Cog.listener()
     async def on_raw_reaction_remove(self, payload):
         #reaction role example
-        if payload.message_id == 612553821528391702:
-            if str(payload.emoji) == '🖥':
+        if payload.message_id == 746320857516998816:
+            if str(payload.emoji) == '<:AOVicon:747125830186041345>':
                 guild = self.bot.get_guild(payload.guild_id)#取得server id
-                role = guild.get_role(614812329258778635)#取得role資料
+                role = guild.get_role(745851285621702687)#取得role資料
                 user = guild.get_member(payload.user_id)
                 await user.remove_roles(role)#移除role
-                await user.send(f'移除 **{role}** 身分組成功')
+
+        if payload.message_id == 746320857516998816:
+            if str(payload.emoji) == '<:minecraft_grass:747125831297663057>':
+                guild = self.bot.get_guild(payload.guild_id)#取得server id
+                role = guild.get_role(745851154700959906)#取得role資料
+                user = guild.get_member(payload.user_id)
+                await user.remove_roles(role)#移除role
+
+        if payload.message_id == 746320857516998816:
+            if str(payload.emoji) == '<:pubgliteicon:747125830269927495>':
+                guild = self.bot.get_guild(payload.guild_id)#取得server id
+                role = guild.get_role(745850928653008938)#取得role資料
+                user = guild.get_member(payload.user_id)
+                await user.remove_roles(role)#移除role
+
+        if payload.message_id == 746320857516998816:
+            if str(payload.emoji) == '<:OsuLogo:747128004974477382>':
+                guild = self.bot.get_guild(payload.guild_id)#取得server id
+                role = guild.get_role(745859173048385561)#取得role資料
+                user = guild.get_member(payload.user_id)
+                await user.remove_roles(role)#移除role
         
 def setup(bot):
     bot.add_cog(Admin(bot))
