@@ -126,10 +126,7 @@ class Admin(Cog_Extension):
                 await channel.send(f'【你踩到兔几的陷阱，掉進了新的區域】\n歡迎【{payload.member.mention}】來到了 {channel.mention} \n送上胡蘿蔔，以示友好☆')
 
         if payload.message_id == 746320857516998816:
-            print(1)
-            print(payload.emoji)
             if str(payload.emoji) == '<:OsuLogo:747128004974477382>':
-                print(2)
                 guild = self.bot.get_guild(payload.guild_id)#取得server id
                 role = guild.get_role(745859173048385561)#取得role資料
                 channel = guild.get_channel(745858655005442118)#取得channel資料
