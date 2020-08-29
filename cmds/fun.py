@@ -30,7 +30,7 @@ class Fun(Cog_Extension):
         if msg.author.bot:
             return
 
-        if msg.content == self.bot.user.mention and msg.author != self.bot.user:
+        if msg.content == '<@!742345451667193939>' and msg.author != self.bot.user:
             await msg.channel.send(random.choice(bcdata['cow_msg']))
     
     @commands.command(aliases=['抽'])
