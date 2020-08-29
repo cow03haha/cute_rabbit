@@ -24,15 +24,15 @@ class Fun(Cog_Extension):
         random_pic = random.choice(imgs)
         pic = discord.File(random_pic)#發送檔案的處理方式
         await ctx.send(file = pic)#用file來定要發送檔案
-    '''
+    
     @commands.Cog.listener()
     async def on_message(self, msg):
         if msg.author.bot:
             return
 
-        if msg.content.endswith('牛牛') and msg.author != self.bot.user:
+        if msg.content == self.bot.user.mention and msg.author != self.bot.user:
             await msg.channel.send(random.choice(bcdata['cow_msg']))
-    '''     
+    
     @commands.command(aliases=['抽'])
     async def 抽籤(self, ctx):
         '''試手氣。'''
