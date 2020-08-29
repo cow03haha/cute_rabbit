@@ -30,7 +30,7 @@ class Main(Cog_Extension):
     @commands.command(aliases=['about'])
     async def info(self, ctx):
         '''bot資訊。'''
-        cow = self.bot.get_user(self.bot.bot_owner.id)
+        cow = self.bot.get_user(self.bot.owner_id)
         tw = pytz.timezone('Asia/Taipei')
         embed=discord.Embed(title="about", description="Rabbit♡Fairy專用bot", color=0xf5ed00, timestamp=datetime.datetime.now(tz=tw))
         embed.set_author(name="cow03", icon_url=str(cow.avatar_url))
