@@ -18,12 +18,11 @@ class Admin(Cog_Extension):
             #print(f'{member} 加入了牛牛神殿')
             #channel = member.guild.get_channel(int(bcdata['welcome_channel']))
             role = member.guild.get_role(int(bcdata['rabbit_guild']['guest_role']))
-            today = datetime.datetime.now().strftime('%Y-%m-%d')
+            tw = pytz.timezone('Asia/Taipei')
             await member.add_roles(role)
 
-            embed=discord.Embed(title=" ", description=f'歡迎來到{member.guild}~\n記得先看完 <#743353331363217418>\n之後再按照 <#746312391955841074> 的指示來驗證並正式加入本群\n', color=0xf5ed00)
+            embed=discord.Embed(title=" ", description=f'歡迎來到{member.guild}~\n記得先看完 <#743353331363217418>\n之後再按照 <#746312391955841074> 的指示來驗證並正式加入本群\n', color=0xf5ed00, timestamp=datetime.datetime.now(tz=tw))
             embed.set_author(name="牛牛の僕", icon_url="https://imgur.com/za5ATTg.jpg")
-            embed.set_footer(text=today)
             await member.send(embed=embed)
         
     #member退出
