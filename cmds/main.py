@@ -36,7 +36,7 @@ class Main(Cog_Extension):
         embed.set_author(name="cow03", icon_url=str(cow.avatar_url))
         embed.set_thumbnail(url=str(self.bot.user.avatar_url))
         embed.add_field(name="作者", value="<@315414910689476609>", inline=True)
-        embed.add_field(name="support server", value="[link](https://discord.gg/DRqZk6Y)", inline=True)
+        embed.add_field(name="support server", value="[link](https://discord.gg/tXvgBfu)", inline=True)
         await ctx.send(embed=embed)
     
     @commands.command()
