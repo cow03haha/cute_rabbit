@@ -83,7 +83,7 @@ class Main(Cog_Extension):
             time = datetime.datetime.now(tz=tz).strftime("%m-%d %H:%M:%S")
             await ctx.send(f'現在的美國西岸時間是 {time}')
         elif tz == 'uk':
-            tz = pytz.timezone('Etc/GMT+0')
+            tz = pytz.timezone('WET')
             time = datetime.datetime.now(tz=tz).strftime("%m-%d %H:%M:%S")
             await ctx.send(f'現在的英國時間是 {time}')
         elif tz == 'tk':
