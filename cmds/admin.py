@@ -93,7 +93,7 @@ class Admin(Cog_Extension):
             if origin in ctx.guild.voice_channels and target in ctx.guild.voice_channels:
                 for members in origin.members:
                     await members.edit(voice_channel=target)
-        res = f"把所有成員從 {origin.id} 移動到 {target.mention} 成功"
+        res = f"把所有成員從 {origin.mention} 移動到 {target.mention} 成功"
         await ctx.send(res)
 
     #recation role
