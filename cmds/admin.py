@@ -60,7 +60,7 @@ class Admin(Cog_Extension):
             embed=discord.Embed(title=" ", description=f'☆歡迎 {newer.mention} 來到Rabbit♡Fairy ☆\n\n新仁先去 <#743353331363217418> 了解我們的規定\n再來通過 <#746312391955841074> 即可成為我們的一員\n這邊 <#743854911078531219> 可以選擇你常玩的遊戲\n以及你自己喜歡的顏色(ฅ´ω`ฅ)\n\n☆♡☆♡☆♡☆♡☆♡☆♡☆♡', color=0xf5ed00, timestamp=datetime.datetime.now(tz=tw))
             embed.set_author(name="牛牛の僕", icon_url="https://imgur.com/za5ATTg.jpg")
             await msg.channel.send(embed=embed)
-        
+        '''
         #簽到系統
         if msg.channel.id == 753543338006806528 and msg.content == '簽':
             with open('members.json', 'r', encoding='utf8') as bcfile:
@@ -85,7 +85,7 @@ class Admin(Cog_Extension):
                 json.dump(bcdata, bcfile, indent=4)
             
             await msg.channel.send(f'{msg.author.mention} 簽到成功!，這是你連續簽到的第 **{bcdata[str(msg.author.id)]["total"]}** 天')
-
+        '''
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def clear(self, ctx, count:int):

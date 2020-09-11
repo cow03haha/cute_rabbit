@@ -21,7 +21,7 @@ class Task(Cog_Extension):
         '''
         
         #self.counter = 0
-        
+        '''
         async def good_morning():
             await self.bot.wait_until_ready()
 
@@ -55,7 +55,7 @@ class Task(Cog_Extension):
                     pass
 
         self.bg_task = self.bot.loop.create_task(good_morning())
-        
+        '''
 
         '''
         async def fight_task():
