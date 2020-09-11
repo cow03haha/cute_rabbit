@@ -30,7 +30,7 @@ class Fun(Cog_Extension):
         if msg.author.bot:
             return
 
-        if msg.content == '<@!742345451667193939>' and msg.author != self.bot.user:
+        if msg.content == '<@!742345451667193939>':
             await msg.channel.send(random.choice(bcdata['cow_msg']))
     
     @commands.command(aliases=['抽'])
@@ -128,7 +128,8 @@ class Fun(Cog_Extension):
         await fight.delete()
         await ctx.send('內戰取消成功')
     
-    '''@commands.Cog.listener()
+    '''
+    @commands.Cog.listener()
     async def on_raw_reaction_add(self, payload):
         if payload.message_id == fight.id:
             if payload.user_id != self.bot.user.id:
@@ -145,7 +146,8 @@ class Fun(Cog_Extension):
                 role = guild.get_role(743668426383294495)#取得role資料
                 user = guild.get_member(payload.user_id)
                 await user.remove_roles(role)#移除role
-                await user.send('退出內戰成功')'''
+                await user.send('退出內戰成功')
+    '''
 
 def setup(bot):
     bot.add_cog(Fun(bot))
