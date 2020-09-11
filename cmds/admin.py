@@ -9,6 +9,7 @@ import pytz
 
 class Admin(Cog_Extension):
     '''管理指令'''
+    
     #member加入
     @commands.Cog.listener()
     async def on_member_join(self, member):
@@ -24,18 +25,21 @@ class Admin(Cog_Extension):
             embed=discord.Embed(title=" ", description=f'歡迎來到{member.guild}~\n記得先看完 <#743353331363217418>\n之後再按照 <#746312391955841074> 的指示來驗證並正式加入本群\n', color=0xf5ed00, timestamp=datetime.datetime.now(tz=tw))
             embed.set_author(name="牛牛の僕", icon_url="https://imgur.com/za5ATTg.jpg")
             await member.send(embed=embed)
-        
-    #member退出
+     
+    
     '''
+    #member退出
     @commands.Cog.listener()
     async def on_member_remove(self, member):
         #print(f'{member} 離開了牛牛神殿')
         channel = self.bot.get_channel(int(bcdata['leave_channel']))
-        await channel.send(f'{member} 離開了牛牛神殿')'''
+        await channel.send(f'{member} 離開了牛牛神殿')
+    '''
 
-    #驗證系統 
     @commands.Cog.listener()
     async def on_message(self, msg):
+        
+        #驗證系統 
         if msg.content == '同意' and msg.author != self.bot.user and msg.channel.id == int(bcdata['rabbit_guild']['auth_channel']):
             await msg.delete()
             guest = msg.guild.get_role(int(bcdata["rabbit_guild"]['guest_role']))
@@ -49,12 +53,38 @@ class Admin(Cog_Extension):
         elif msg.content != '同意' and msg.author != self.bot.user and msg.channel.id == int(bcdata["rabbit_guild"]["auth_channel"]):
             await msg.delete()
             await msg.channel.send(f'{msg.author.mention} 驗證失敗，請再看仔細一點 ༼ ◕д ◕ ༽', delete_after=10)
+
         #歡迎訊息
         if msg.channel.id == int(bcdata['rabbit_guild']['welcome_channel']) and msg.author.id == 276060004262477825:
             tw = pytz.timezone('Asia/Taipei')
             embed=discord.Embed(title=" ", description=f'☆歡迎 {newer.mention} 來到Rabbit♡Fairy ☆\n\n新仁先去 <#743353331363217418> 了解我們的規定\n再來通過 <#746312391955841074> 即可成為我們的一員\n這邊 <#743854911078531219> 可以選擇你常玩的遊戲\n以及你自己喜歡的顏色(ฅ´ω`ฅ)\n\n☆♡☆♡☆♡☆♡☆♡☆♡☆♡', color=0xf5ed00, timestamp=datetime.datetime.now(tz=tw))
             embed.set_author(name="牛牛の僕", icon_url="https://imgur.com/za5ATTg.jpg")
             await msg.channel.send(embed=embed)
+        
+        #簽到系統
+        if msg.channel.id == 753543338006806528 and msg.content == '簽':
+            with open('members.json', 'r', encoding='utf8') as bcfile:
+                bcdata =json.load(bcfile)
+            
+            try:
+                if bcdata[f'{msg.author.id}']["today"]:
+                    await msg.channel.send(f'{msg.author.mention} 你今天已經簽到了!')
+                    return
+            except:
+                try:
+                    data = { 'name': msg.author.name, 'nickname': msg.author.display_name, 'total': bcdata[f'{msg.author.id}']["total"]+1, 'today': 1}
+                except:
+                    data = { 'name': msg.author.name, 'nickname': msg.author.display_name, 'total': 1, 'today': 1}
+                    try:
+                        bcdata["member_id"].append(msg.author.id)
+                    except:
+                        bcdata["member_id"] = [msg.author.id]
+            
+            bcdata[f'{msg.author.id}'] = data
+            with open('members.json', 'w', encoding='utf8') as bcfile:
+                json.dump(bcdata, bcfile, indent=4)
+            
+            await msg.channel.send(f'{msg.author.mention} 簽到成功!，這是你連續簽到的第 **{bcdata[str(msg.author.id)]["total"]}** 天')
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
@@ -99,7 +129,8 @@ class Admin(Cog_Extension):
     #recation role
     @commands.Cog.listener()
     async def on_raw_reaction_add(self, payload):
-        #reaction role example
+        
+        #reaction role 傳說
         if payload.message_id == 746320857516998816:
             if str(payload.emoji) == '<:AOVicon:747125830186041345>':
                 guild = self.bot.get_guild(payload.guild_id)#取得server id
@@ -108,6 +139,7 @@ class Admin(Cog_Extension):
                 await payload.member.add_roles(role)#給予role
                 await channel.send(f'【你踩到兔几的陷阱，掉進了新的區域】\n歡迎【{payload.member.mention}】來到了 {channel.mention} \n送上胡蘿蔔，以示友好☆')
 
+        #reaction role minecraft
         if payload.message_id == 746320857516998816:
             if str(payload.emoji) == '<:minecraft_grass:747125831297663057>':
                 guild = self.bot.get_guild(payload.guild_id)#取得server id
@@ -116,6 +148,7 @@ class Admin(Cog_Extension):
                 await payload.member.add_roles(role)#給予role
                 await channel.send(f'【你踩到兔几的陷阱，掉進了新的區域】\n歡迎【{payload.member.mention}】來到了 {channel.mention} \n送上胡蘿蔔，以示友好☆')
 
+        #reaction role pubg lite
         if payload.message_id == 746320857516998816:
             if str(payload.emoji) == '<:pubgliteicon:747125830269927495>':
                 guild = self.bot.get_guild(payload.guild_id)#取得server id
@@ -124,6 +157,7 @@ class Admin(Cog_Extension):
                 await payload.member.add_roles(role)#給予role
                 await channel.send(f'【你踩到兔几的陷阱，掉進了新的區域】\n歡迎【{payload.member.mention}】來到了 {channel.mention} \n送上胡蘿蔔，以示友好☆')
 
+        #reaction role osu
         if payload.message_id == 746320857516998816:
             if str(payload.emoji) == '<:OsuLogo:747128004974477382>':
                 guild = self.bot.get_guild(payload.guild_id)#取得server id
@@ -132,9 +166,11 @@ class Admin(Cog_Extension):
                 await payload.member.add_roles(role)#給予role
                 await channel.send(f'【你踩到兔几的陷阱，掉進了新的區域】\n歡迎【{payload.member.mention}】來到了 {channel.mention} \n送上胡蘿蔔，以示友好☆')
         
+
     @commands.Cog.listener()
     async def on_raw_reaction_remove(self, payload):
-        #reaction role example
+        
+        #移除reaction role 傳說
         if payload.message_id == 746320857516998816:
             if str(payload.emoji) == '<:AOVicon:747125830186041345>':
                 guild = self.bot.get_guild(payload.guild_id)#取得server id
@@ -142,6 +178,7 @@ class Admin(Cog_Extension):
                 user = guild.get_member(payload.user_id)
                 await user.remove_roles(role)#移除role
 
+        #移除reaction role minecraft
         if payload.message_id == 746320857516998816:
             if str(payload.emoji) == '<:minecraft_grass:747125831297663057>':
                 guild = self.bot.get_guild(payload.guild_id)#取得server id
@@ -149,6 +186,7 @@ class Admin(Cog_Extension):
                 user = guild.get_member(payload.user_id)
                 await user.remove_roles(role)#移除role
 
+        #移除reaction role pubg lite
         if payload.message_id == 746320857516998816:
             if str(payload.emoji) == '<:pubgliteicon:747125830269927495>':
                 guild = self.bot.get_guild(payload.guild_id)#取得server id
@@ -156,12 +194,14 @@ class Admin(Cog_Extension):
                 user = guild.get_member(payload.user_id)
                 await user.remove_roles(role)#移除role
 
+        #移除reaction role osu
         if payload.message_id == 746320857516998816:
             if str(payload.emoji) == '<:OsuLogo:747128004974477382>':
                 guild = self.bot.get_guild(payload.guild_id)#取得server id
                 role = guild.get_role(745859173048385561)#取得role資料
                 user = guild.get_member(payload.user_id)
                 await user.remove_roles(role)#移除role
+        
         
 def setup(bot):
     bot.add_cog(Admin(bot))
