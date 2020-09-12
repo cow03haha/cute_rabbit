@@ -30,7 +30,7 @@ class Fun(Cog_Extension):
             return
 
         if msg.content == '<@!742345451667193939>':
-            with open('members.json', 'r', encoding='utf8') as bcfile:
+            with open('settings.json', 'r', encoding='utf8') as bcfile:
                 bcdata =json.load(bcfile)
                 
             await msg.channel.send(random.choice(bcdata['cow_msg']))
