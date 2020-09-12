@@ -73,13 +73,14 @@ class Admin(Cog_Extension):
             with open('members.json', 'r', encoding='utf8') as bcfile:
                 bcdata =json.load(bcfile)
             
-            if msg.author.id in bcdata['member_id']:
+            if msg.author.id in bcdata["member_id"]:
                 if bcdata[f'{msg.author.id}']["today"] == 1:
                     await msg.channel.send(f'{msg.author.mention} 你今天已經簽到了!')
                     return
-                data = { 'name': msg.author.name, 'nickname': msg.author.display_name, 'total': bcdata[f'{msg.author.id}']["total"]+1, 'today': 1}
+                bcdata[f'{msg.author.id}']['today'] = 1
+                bcdata[f'{msg.author.id}']['total'] = bcdata[f'{msg.author.id}']['total'] + 1
             else:
-                data = { 'name': msg.author.name, 'nickname': msg.author.display_name, 'total': 1, 'today': 1}
+                data = { 'name': msg.author.name, 'nickname': msg.author.display_name, 'total': 1, 'today': 1, 'custom_role': False}
                 try:
                     bcdata["member_id"].append(msg.author.id)
                 except:
@@ -103,6 +104,38 @@ class Admin(Cog_Extension):
             await ctx.send(f'<@!{member}> 已連續簽到了 **{bcdata[str(member)]["total"]}** 天')
         except:
             await ctx.send("沒有資料!")
+    
+    @commands.command(aliases=['申請'])
+    async def apply(self, ctx, name, color): 
+        with open('members.json', 'r', encoding='utf8') as bcfile:
+            bcdata = json.load(bcfile)
+        
+        if ctx.author.id in bcdata["member_id"]:
+            if bcdata[f'{ctx.author.id}']["total"] >= 3:
+                if bcdata[f'{ctx.author.id}']["custom_role"] == False:
+                    color = int(color.replace('#', '0x'), 16)
+                    line = ctx.guild.get_role(753989478464487505)
+                    line = line.position
+
+                    role = await ctx.guild.create_role(reason="連續簽到3天獎勵", name=name, colour=discord.Colour(color))
+                    await role.edit(reson="連續簽到3天獎勵", position=line)
+                    bcdata[f'{ctx.author.id}']["custom_role"] = role.id
+                    with open('members.json', 'w', encoding='utf8') as bcfile:
+                        json.dump(bcdata, bcfile, indent=4)
+
+                    await ctx.author.add_roles(role, reason="連續簽到3天獎勵")
+                    await ctx.send(f'{ctx.author.mention} 申請自訂身分組成功')
+                elif bcdata[f'{ctx.author.id}']["custom_role"] != False:
+                    color = int(color.replace('#', '0x'), 16)
+                    role = ctx.guild.get_role(bcdata[f'{ctx.author.id}']["custom_role"])
+
+                    await role.edit(reson="連續簽到3天獎勵", name=name, colour=discord.Colour(color))
+                    await ctx.send(f'{ctx.author.mention} 更新自訂身分組成功')
+            else:
+                await ctx.send(f'{ctx.author.mention} 你沒有達到申請資格!')
+        else:
+            await ctx.send(f'{ctx.author.mention} 你沒有達到申請資格!')
+            
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
