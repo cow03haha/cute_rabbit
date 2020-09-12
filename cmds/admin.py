@@ -94,6 +94,7 @@ class Admin(Cog_Extension):
     @commands.command()
     @commands.has_permissions(administrator=True)
     async def status(self, ctx, member):
+        '''檢查成員簽到狀態。用法/status @成員'''
         with open('members.json', 'r', encoding='utf8') as bcfile:
             bcdata =json.load(bcfile)
         member = member.lstrip('<@!').rstrip('>')
