@@ -34,7 +34,6 @@ class Task(Cog_Extension):
 
                     for i in bcdata["member_id"]:
                         if bcdata[f'{i}']["today"] != 1:
-                            print(bcdata[f'{i}']["total"])
                             bcdata[f'{i}']["total"] = 0
                             bcdata[f'{i}']["today"] = 0
                             with open('members.json', 'w', encoding='utf8') as bcfile:
@@ -43,6 +42,18 @@ class Task(Cog_Extension):
                             bcdata[f'{i}']["today"] = 0
                             with open('members.json', 'w', encoding='utf8') as bcfile:
                                 json.dump(bcdata, bcfile, indent=4)
+                        
+                        if bcdata[f'{i}']["total"] < 3 and bcdata[f'{i}']["custom_role"] != False:
+                            guild = self.bot.get_guild(743292989790748812)
+                            member = guild.get_member(i)
+                            role = guild.get_role(bcdata[f'{i}']["custom_role"])
+                            await member.remove_roles(role)
+                        elif bcdata[f'{i}']["total"] >= 3 and bcdata[f'{i}']["custom_role"] != False:
+                            guild = self.bot.get_guild(743292989790748812)
+                            member = guild.get_member(i)
+                            role = guild.get_role(bcdata[f'{i}']["custom_role"])
+                            await member.add_roles(role)
+
 
                     channel = self.bot.get_channel(743768856853479525)
                     await channel.send("每日結算成功")
