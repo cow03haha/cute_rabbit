@@ -85,8 +85,8 @@ class Admin(Cog_Extension):
                     bcdata["member_id"].append(msg.author.id)
                 except:
                     bcdata["member_id"] = [msg.author.id]
-
-            bcdata[f'{msg.author.id}'] = data
+                bcdata[f'{msg.author.id}'] = data
+                
             with open('members.json', 'w', encoding='utf8') as bcfile:
                 json.dump(bcdata, bcfile, indent=4)
             
