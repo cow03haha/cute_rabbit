@@ -29,7 +29,7 @@ class Fun(Cog_Extension):
         if msg.author.bot:
             return
 
-        if msg.content == '<@!742345451667193939>':
+        if msg.content == f'<@!{self.bot.user.id}>':
             with open('settings.json', 'r', encoding='utf8') as bcfile:
                 bcdata =json.load(bcfile)
                 
