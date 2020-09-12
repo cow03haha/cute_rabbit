@@ -16,7 +16,7 @@ class Admin(Cog_Extension):
         newer = member
         with open('settings.json', 'r', encoding='utf8') as bcfile:
             bcdata = json.load(bcfile)
-
+        
         if member.guild.id == int(bcdata['rabbit_guild']['guild_id']):
             #print(f'{member} 加入了牛牛神殿')
             #channel = member.guild.get_channel(int(bcdata['welcome_channel']))
@@ -67,32 +67,42 @@ class Admin(Cog_Extension):
             embed=discord.Embed(title=" ", description=f'☆歡迎 {newer.mention} 來到Rabbit♡Fairy ☆\n\n新仁先去 <#743353331363217418> 了解我們的規定\n再來通過 <#746312391955841074> 即可成為我們的一員\n這邊 <#743854911078531219> 可以選擇你常玩的遊戲\n以及你自己喜歡的顏色(ฅ´ω`ฅ)\n\n☆♡☆♡☆♡☆♡☆♡☆♡☆♡', color=0xf5ed00, timestamp=datetime.datetime.now(tz=tw))
             embed.set_author(name="牛牛の僕", icon_url="https://imgur.com/za5ATTg.jpg")
             await msg.channel.send(embed=embed)
-        '''
+        
         #簽到系統
-        if msg.channel.id == 753543338006806528 and msg.content == '簽':
+        if msg.channel.id == 753543338006806528 and msg.content == '簽' and msg.author.bot == False:
             with open('members.json', 'r', encoding='utf8') as bcfile:
                 bcdata =json.load(bcfile)
             
-            try:
-                if bcdata[f'{msg.author.id}']["today"]:
+            if msg.author.id in bcdata['member_id']:
+                if bcdata[f'{msg.author.id}']["today"] == 1:
                     await msg.channel.send(f'{msg.author.mention} 你今天已經簽到了!')
                     return
-            except:
+                data = { 'name': msg.author.name, 'nickname': msg.author.display_name, 'total': bcdata[f'{msg.author.id}']["total"]+1, 'today': 1}
+            else:
+                data = { 'name': msg.author.name, 'nickname': msg.author.display_name, 'total': 1, 'today': 1}
                 try:
-                    data = { 'name': msg.author.name, 'nickname': msg.author.display_name, 'total': bcdata[f'{msg.author.id}']["total"]+1, 'today': 1}
+                    bcdata["member_id"].append(msg.author.id)
                 except:
-                    data = { 'name': msg.author.name, 'nickname': msg.author.display_name, 'total': 1, 'today': 1}
-                    try:
-                        bcdata["member_id"].append(msg.author.id)
-                    except:
-                        bcdata["member_id"] = [msg.author.id]
-            
+                    bcdata["member_id"] = [msg.author.id]
+
             bcdata[f'{msg.author.id}'] = data
             with open('members.json', 'w', encoding='utf8') as bcfile:
                 json.dump(bcdata, bcfile, indent=4)
             
             await msg.channel.send(f'{msg.author.mention} 簽到成功!，這是你連續簽到的第 **{bcdata[str(msg.author.id)]["total"]}** 天')
-        '''
+        
+    @commands.command()
+    @commands.has_permissions(administrator=True)
+    async def status(self, ctx, member):
+        with open('members.json', 'r', encoding='utf8') as bcfile:
+            bcdata =json.load(bcfile)
+        member = member.lstrip('<@!').rstrip('>')
+
+        try:
+            await ctx.send(f'<@!{member}> 已連續簽到了 **{bcdata[str(member)]["total"]}** 天')
+        except:
+            await ctx.send("沒有資料!")
+
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def clear(self, ctx, count:int):
