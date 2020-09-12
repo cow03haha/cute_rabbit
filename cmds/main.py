@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 from cores.classes import Cog_Extension
-from bot import bcdata, check_owner
+from bot import check_owner
 import datetime
 import time
 import pytz
