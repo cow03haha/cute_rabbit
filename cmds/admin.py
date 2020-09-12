@@ -1,7 +1,6 @@
 import discord
 from discord.ext import commands
 from cores.classes import Cog_Extension
-from bot import bcdata
 import asyncio
 import json
 import datetime
@@ -9,12 +8,15 @@ import pytz
 
 class Admin(Cog_Extension):
     '''管理指令'''
-    
     #member加入
     @commands.Cog.listener()
     async def on_member_join(self, member):
+        
         global newer
         newer = member
+        with open('members.json', 'r', encoding='utf8') as bcfile:
+                bcdata =json.load(bcfile)
+
         if member.guild.id == int(bcdata['rabbit_guild']['guild_id']):
             #print(f'{member} 加入了牛牛神殿')
             #channel = member.guild.get_channel(int(bcdata['welcome_channel']))
@@ -25,12 +27,15 @@ class Admin(Cog_Extension):
             embed=discord.Embed(title=" ", description=f'歡迎來到{member.guild}~\n記得先看完 <#743353331363217418>\n之後再按照 <#746312391955841074> 的指示來驗證並正式加入本群\n', color=0xf5ed00, timestamp=datetime.datetime.now(tz=tw))
             embed.set_author(name="牛牛の僕", icon_url="https://imgur.com/za5ATTg.jpg")
             await member.send(embed=embed)
-     
+        
     
     '''
     #member退出
     @commands.Cog.listener()
     async def on_member_remove(self, member):
+        with open('members.json', 'r', encoding='utf8') as bcfile:
+                bcdata =json.load(bcfile)
+
         #print(f'{member} 離開了牛牛神殿')
         channel = self.bot.get_channel(int(bcdata['leave_channel']))
         await channel.send(f'{member} 離開了牛牛神殿')
@@ -38,6 +43,8 @@ class Admin(Cog_Extension):
 
     @commands.Cog.listener()
     async def on_message(self, msg):
+        with open('members.json', 'r', encoding='utf8') as bcfile:
+                bcdata =json.load(bcfile)
         
         #驗證系統 
         if msg.content == '同意' and msg.author != self.bot.user and msg.channel.id == int(bcdata['rabbit_guild']['auth_channel']):
