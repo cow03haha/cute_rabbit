@@ -21,41 +21,40 @@ class Task(Cog_Extension):
         '''
         
         #self.counter = 0
-        '''
-        async def good_morning():
+        
+        async def daily_check():
             await self.bot.wait_until_ready()
 
             while not self.bot.is_closed():
                 now_time = datetime.datetime.now().strftime('%H%M%S')
 
                 if now_time == '000000':
-                    print('you got it')
                     with open('members.json', 'r', encoding='utf8') as bcfile:
                         bcdata = json.load(bcfile)
 
                     for i in bcdata["member_id"]:
-                        print(i)
                         if bcdata[f'{i}']["today"] != 1:
                             print(bcdata[f'{i}']["total"])
                             bcdata[f'{i}']["total"] = 0
                             bcdata[f'{i}']["today"] = 0
                             with open('members.json', 'w', encoding='utf8') as bcfile:
                                 json.dump(bcdata, bcfile, indent=4)
-                            print('if success')
                         else:
                             bcdata[f'{i}']["today"] = 0
                             with open('members.json', 'w', encoding='utf8') as bcfile:
                                 json.dump(bcdata, bcfile, indent=4)
-                            print('else success')
+
+                    channel = self.bot.get_channel(743768856853479525)
+                    await channel.send("每日結算成功")
                         
                     await asyncio.sleep(1)
-                    self.bg_task = self.bot.loop.create_task(good_morning())
+                    self.bg_task = self.bot.loop.create_task(daily_check())
                 else:
                     await asyncio.sleep(1)
                     pass
 
-        self.bg_task = self.bot.loop.create_task(good_morning())
-        '''
+        self.bg_task = self.bot.loop.create_task(daily_check())
+        
 
         '''
         async def fight_task():
