@@ -9,7 +9,7 @@ with open('settings.json', 'r', encoding='utf8') as bcfile:
     bcdata = json.load(bcfile)
 
 #代表bot本身
-bot = commands.Bot(command_prefix='>')
+bot = commands.Bot(command_prefix='/')
 
 #bot上線
 @bot.event
@@ -55,4 +55,4 @@ for filename in os.listdir('./cmds'):
         bot.load_extension(f'cmds.{filename[:-3]}')
 
 if __name__ == "__main__":
-    bot.run(bcdata['test_token'])
+    bot.run(bcdata['token'])
