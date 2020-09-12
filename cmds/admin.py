@@ -14,8 +14,8 @@ class Admin(Cog_Extension):
         
         global newer
         newer = member
-        with open('members.json', 'r', encoding='utf8') as bcfile:
-                bcdata =json.load(bcfile)
+        with open('settings.json', 'r', encoding='utf8') as bcfile:
+            bcdata = json.load(bcfile)
 
         if member.guild.id == int(bcdata['rabbit_guild']['guild_id']):
             #print(f'{member} 加入了牛牛神殿')
@@ -43,8 +43,8 @@ class Admin(Cog_Extension):
 
     @commands.Cog.listener()
     async def on_message(self, msg):
-        with open('members.json', 'r', encoding='utf8') as bcfile:
-                bcdata =json.load(bcfile)
+        with open('settings.json', 'r', encoding='utf8') as bcfile:
+            bcdata = json.load(bcfile)
         
         #驗證系統 
         if msg.content == '同意' and msg.author != self.bot.user and msg.channel.id == int(bcdata['rabbit_guild']['auth_channel']):
