@@ -131,3 +131,6 @@ dmypy.json
 
 # token
 settings.json
+
+#daily_check
+members.json
