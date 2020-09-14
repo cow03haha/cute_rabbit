@@ -77,8 +77,13 @@ class Admin(Cog_Extension):
                 if bcdata[f'{msg.author.id}']["today"] == 1:
                     await msg.channel.send(f'{msg.author.mention} 你今天已經簽到了!')
                     return
-                bcdata[f'{msg.author.id}']['today'] = 1
-                bcdata[f'{msg.author.id}']['total'] = bcdata[f'{msg.author.id}']['total'] + 1
+                if msg.author.name != bcdata[f'{msg.author.id}']["name"]:
+                    bcdata[f'{msg.author.id}']["name"] = msg.author.name
+                elif msg.author.display_name != bcdata[f'{msg.author.id}']["nickname"]:
+                    bcdata[f'{msg.author.id}']["nickname"] = msg.author.display_name
+                else: 
+                    bcdata[f'{msg.author.id}']['today'] = 1
+                    bcdata[f'{msg.author.id}']['total'] = bcdata[f'{msg.author.id}']['total'] + 1
             else:
                 data = { 'name': msg.author.name, 'nickname': msg.author.display_name, 'total': 1, 'today': 1, 'custom_role': False}
                 try:
