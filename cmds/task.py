@@ -59,7 +59,6 @@ class Task(Cog_Extension):
                     await channel.send("每日結算成功")
                         
                     await asyncio.sleep(1)
-                    self.bg_task = self.bot.loop.create_task(daily_check())
                 else:
                     await asyncio.sleep(1)
                     pass
