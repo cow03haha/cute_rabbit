@@ -69,7 +69,7 @@ class Admin(Cog_Extension):
             await msg.channel.send(embed=embed)
         
         #簽到系統
-        if msg.channel.id == 753923849480962100 and msg.content == '簽' and msg.author.bot == False:
+        if msg.channel.id == 753543338006806528 and msg.content == '簽' and msg.author.bot == False:
             with open('members.json', 'r', encoding='utf8') as bcfile:
                 bcdata =json.load(bcfile)
             
