@@ -69,21 +69,21 @@ class Admin(Cog_Extension):
             await msg.channel.send(embed=embed)
         
         #簽到系統
-        if msg.channel.id == 753543338006806528 and msg.content == '簽' and msg.author.bot == False:
+        if msg.channel.id == 753923849480962100 and msg.content == '簽' and msg.author.bot == False:
             with open('members.json', 'r', encoding='utf8') as bcfile:
                 bcdata =json.load(bcfile)
             
             if msg.author.id in bcdata["member_id"]:
-                if bcdata[f'{msg.author.id}']["today"] == 1:
+                if bcdata[f'{msg.author.id}']["today"]:
                     await msg.channel.send(f'{msg.author.mention} 你今天已經簽到了!')
                     return
                 if msg.author.name != bcdata[f'{msg.author.id}']["name"]:
                     bcdata[f'{msg.author.id}']["name"] = msg.author.name
-                elif msg.author.display_name != bcdata[f'{msg.author.id}']["nickname"]:
+                if msg.author.display_name != bcdata[f'{msg.author.id}']["nickname"]:
                     bcdata[f'{msg.author.id}']["nickname"] = msg.author.display_name
-                else: 
-                    bcdata[f'{msg.author.id}']['today'] = 1
-                    bcdata[f'{msg.author.id}']['total'] = bcdata[f'{msg.author.id}']['total'] + 1
+                 
+                bcdata[f'{msg.author.id}']['today'] = 1
+                bcdata[f'{msg.author.id}']['total'] += 1
             else:
                 data = { 'name': msg.author.name, 'nickname': msg.author.display_name, 'total': 1, 'today': 1, 'custom_role': False}
                 try:
