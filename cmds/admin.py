@@ -29,17 +29,19 @@ class Admin(Cog_Extension):
             await member.send(embed=embed)
         
     
-    '''
     #member退出
     @commands.Cog.listener()
     async def on_member_remove(self, member):
         with open('members.json', 'r', encoding='utf8') as bcfile:
                 bcdata =json.load(bcfile)
 
-        #print(f'{member} 離開了牛牛神殿')
-        channel = self.bot.get_channel(int(bcdata['leave_channel']))
-        await channel.send(f'{member} 離開了牛牛神殿')
-    '''
+        if member.id in bcdata["member_id"]:
+            bcdata["member_id"].remove(member.id)
+            del bcdata[f'{member.id}']
+            
+            with open('members.json', 'w', encoding='utf8') as bcfile:
+                json.dump(bcdata, bcfile, indent=4)
+        
 
     @commands.Cog.listener()
     async def on_message(self, msg):
