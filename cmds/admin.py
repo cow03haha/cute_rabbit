@@ -32,15 +32,20 @@ class Admin(Cog_Extension):
     #member退出
     @commands.Cog.listener()
     async def on_member_remove(self, member):
+        
         with open('members.json', 'r', encoding='utf8') as bcfile:
                 bcdata =json.load(bcfile)
-
+        
         if member.id in bcdata["member_id"]:
+            if bcdata[f'{member.id}']["custom_role"] != False:
+                role = member.guild.get_role(bcdata[f'{member.id}']["custom_role"])
+                await role.delete(reason="成員退出")
             bcdata["member_id"].remove(member.id)
             del bcdata[f'{member.id}']
             
             with open('members.json', 'w', encoding='utf8') as bcfile:
                 json.dump(bcdata, bcfile, indent=4)
+        
         
 
     @commands.Cog.listener()
@@ -106,14 +111,18 @@ class Admin(Cog_Extension):
         with open('members.json', 'r', encoding='utf8') as bcfile:
             bcdata =json.load(bcfile)
         member_id = member[3:-1]
-
+        
         if int(member_id) in bcdata["member_id"]:
             await ctx.send(f'{member} 已連續簽到了 **{bcdata[member_id]["total"]}** 天')
         else:
             await ctx.send("沒有資料!")
     
     @commands.command(aliases=['申請'])
-    async def apply(self, ctx, name, color): 
+    async def apply(self, ctx, name, color):
+        if ctx.channel.id != 753542568939356220:
+            await ctx.send("你不能在這個頻道使用此指令!")
+            return
+            
         with open('members.json', 'r', encoding='utf8') as bcfile:
             bcdata = json.load(bcfile)
         
@@ -122,10 +131,10 @@ class Admin(Cog_Extension):
                 if bcdata[f'{ctx.author.id}']["custom_role"] == False:
                     color = int(color.replace('#', '0x'), 16)
                     line = ctx.guild.get_role(753989478464487505)
-                    line = line.position
 
                     role = await ctx.guild.create_role(reason="連續簽到3天獎勵", name=name, colour=discord.Colour(color))
-                    await role.edit(reson="連續簽到3天獎勵", position=line)
+                    positions = {role: line.position-1}
+                    await ctx.guild.edit_role_positions(reason="連續簽到3天獎勵", positions=positions)
                     bcdata[f'{ctx.author.id}']["custom_role"] = role.id
                     with open('members.json', 'w', encoding='utf8') as bcfile:
                         json.dump(bcdata, bcfile, indent=4)
