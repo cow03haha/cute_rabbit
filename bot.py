@@ -19,7 +19,8 @@ async def on_ready():
     
 #檢查所有者
 def check_owner(ctx):
-    return ctx.message.author.id == 315414910689476609
+    owner = [315414910689476609,  507946865824890890]
+    return ctx.message.author.id in owner
 
 @commands.check(check_owner)
 @bot.command()
