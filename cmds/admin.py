@@ -105,15 +105,25 @@ class Admin(Cog_Extension):
             await msg.channel.send(f'{msg.author.mention} 簽到成功!，這是你連續簽到的第 **{bcdata[str(msg.author.id)]["total"]}** 天')
         
     @commands.command()
-    @commands.has_permissions(administrator=True)
+    #@commands.has_permissions(administrator=True)
     async def status(self, ctx, member):
         '''檢查成員簽到狀態。用法/status @成員'''
         with open('members.json', 'r', encoding='utf8') as bcfile:
             bcdata =json.load(bcfile)
-        member_id = member[3:-1]
+        member_id = int(member[3:-1])
         
-        if int(member_id) in bcdata["member_id"]:
-            await ctx.send(f'{member} 已連續簽到了 **{bcdata[member_id]["total"]}** 天')
+        if member_id in bcdata["member_id"]:
+            user = bcdata[f'{member_id}']
+            today = user["today"]
+            if today:
+                today = "是"
+            else:
+                today = "否"
+            if user["custom_role"] != False:
+                custom_role = ctx.guild.get_role(user["custom_role"])
+
+            await ctx.send(f'{member} 已連續簽到了 **{user["total"]}** 天\n今天簽到狀態:{today}\n擁有自訂身分組 {custom_role.mention}')
+            print(custom_role.mention)
         else:
             await ctx.send("沒有資料!")
     
