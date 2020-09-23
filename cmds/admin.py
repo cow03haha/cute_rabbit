@@ -1,7 +1,6 @@
 import discord
 from discord.ext import commands
 from cores.classes import Cog_Extension
-import asyncio
 import json
 import datetime
 import pytz
@@ -105,7 +104,7 @@ class Admin(Cog_Extension):
             await msg.channel.send(f'{msg.author.mention} 簽到成功!，這是你連續簽到的第 **{bcdata[str(msg.author.id)]["total"]}** 天')
         
     @commands.command()
-    #@commands.has_permissions(administrator=True)
+    @commands.has_permissions(administrator=True)
     async def status(self, ctx, member):
         '''檢查成員簽到狀態。用法/status @成員'''
         with open('members.json', 'r', encoding='utf8') as bcfile:
@@ -123,7 +122,6 @@ class Admin(Cog_Extension):
                 custom_role = ctx.guild.get_role(user["custom_role"])
 
             await ctx.send(f'{member} 已連續簽到了 **{user["total"]}** 天\n今天簽到狀態:{today}\n擁有自訂身分組 {custom_role.mention}')
-            print(custom_role.mention)
         else:
             await ctx.send("沒有資料!")
     
