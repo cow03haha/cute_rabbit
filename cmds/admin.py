@@ -109,19 +109,28 @@ class Admin(Cog_Extension):
         '''檢查成員簽到狀態。用法/status @成員'''
         with open('members.json', 'r', encoding='utf8') as bcfile:
             bcdata =json.load(bcfile)
-        member_id = int(member[3:-1])
+        
+        try:
+            member_id = int(member)
+        except:
+            member_id = int(member[3:-1])
         
         if member_id in bcdata["member_id"]:
             user = bcdata[f'{member_id}']
             today = user["today"]
+            name = user["name"]
+            nickname = user["nickname"] 
             if today:
                 today = "是"
             else:
                 today = "否"
-            if user["custom_role"] != False:
+            if user["custom_role"]:
                 custom_role = ctx.guild.get_role(user["custom_role"])
+                role_str =f'擁有自訂身分組：是\n自訂身分組名稱：{custom_role.mention}'
+            else:
+                role_str="擁有自訂身分組：否"
 
-            await ctx.send(f'{member} 已連續簽到了 **{user["total"]}** 天\n今天簽到狀態:{today}\n擁有自訂身分組 {custom_role.mention}')
+            await ctx.send(f'名稱：{name}\n暱稱：{nickname}\nid：{member_id}\n已連續簽到：{user["total"]}天\n今天簽到狀態：{today}\n{role_str}')
         else:
             await ctx.send("沒有資料!")
     
