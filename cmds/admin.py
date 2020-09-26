@@ -163,6 +163,7 @@ class Admin(Cog_Extension):
                     role = ctx.guild.get_role(bcdata[f'{ctx.author.id}']["custom_role"])
 
                     await role.edit(reson="連續簽到3天獎勵", name=name, colour=discord.Colour(color))
+                    await ctx.author.add_roles(role, reason="連續簽到3天獎勵")
                     await ctx.send(f'{ctx.author.mention} 更新自訂身分組成功')
             else:
                 await ctx.send(f'{ctx.author.mention} 你沒有達到申請資格!')
