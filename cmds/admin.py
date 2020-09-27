@@ -105,18 +105,13 @@ class Admin(Cog_Extension):
         
     @commands.command()
     @commands.has_permissions(administrator=True)
-    async def status(self, ctx, member):
+    async def status(self, ctx, member: discord.User):
         '''檢查成員簽到狀態。用法/status @成員'''
         with open('members.json', 'r', encoding='utf8') as bcfile:
             bcdata =json.load(bcfile)
         
-        try:
-            member_id = int(member)
-        except:
-            member_id = int(member[3:-1])
-        
-        if member_id in bcdata["member_id"]:
-            user = bcdata[f'{member_id}']
+        if member.id in bcdata["member_id"]:
+            user = bcdata[f'{member.id}']
             today = user["today"]
             name = user["name"]
             nickname = user["nickname"] 
@@ -130,7 +125,7 @@ class Admin(Cog_Extension):
             else:
                 role_str="擁有自訂身分組：否"
 
-            await ctx.send(f'名稱：{name}\n暱稱：{nickname}\nid：{member_id}\n已連續簽到：{user["total"]}天\n今天簽到狀態：{today}\n{role_str}')
+            await ctx.send(f'名稱：{name}\n暱稱：{nickname}\nid：{member.id}\n已連續簽到：{user["total"]}天\n今天簽到狀態：{today}\n{role_str}')
         else:
             await ctx.send("沒有資料!")
     
