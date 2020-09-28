@@ -49,6 +49,7 @@ class Admin(Cog_Extension):
 
     @commands.Cog.listener()
     async def on_message(self, msg):
+        
         with open('settings.json', 'r', encoding='utf8') as bcfile:
             bcdata = json.load(bcfile)
         
@@ -103,6 +104,7 @@ class Admin(Cog_Extension):
             
             await msg.channel.send(f'{msg.author.mention} 簽到成功!，這是你連續簽到的第 **{bcdata[str(msg.author.id)]["total"]}** 天')
         
+        
     @commands.command()
     @commands.has_permissions(administrator=True)
     async def status(self, ctx, member: discord.User):
@@ -130,7 +132,7 @@ class Admin(Cog_Extension):
             await ctx.send("沒有資料!")
     
     @commands.command(aliases=['申請'])
-    async def apply(self, ctx, name, color):
+    async def apply(self, ctx, name, color: discord.Colour):
         if ctx.channel.id != 753542568939356220:
             await ctx.send("你不能在這個頻道使用此指令!")
             return
@@ -141,10 +143,9 @@ class Admin(Cog_Extension):
         if ctx.author.id in bcdata["member_id"]:
             if bcdata[f'{ctx.author.id}']["total"] >= 3:
                 if bcdata[f'{ctx.author.id}']["custom_role"] == False:
-                    color = int(color.replace('#', '0x'), 16)
                     line = ctx.guild.get_role(753989478464487505)
 
-                    role = await ctx.guild.create_role(reason="連續簽到3天獎勵", name=name, colour=discord.Colour(color))
+                    role = await ctx.guild.create_role(reason="連續簽到3天獎勵", name=name, colour=color)
                     positions = {role: line.position-1}
                     await ctx.guild.edit_role_positions(reason="連續簽到3天獎勵", positions=positions)
                     bcdata[f'{ctx.author.id}']["custom_role"] = role.id
@@ -154,10 +155,9 @@ class Admin(Cog_Extension):
                     await ctx.author.add_roles(role, reason="連續簽到3天獎勵")
                     await ctx.send(f'{ctx.author.mention} 申請自訂身分組成功')
                 elif bcdata[f'{ctx.author.id}']["custom_role"] != False:
-                    color = int(color.replace('#', '0x'), 16)
                     role = ctx.guild.get_role(bcdata[f'{ctx.author.id}']["custom_role"])
 
-                    await role.edit(reson="連續簽到3天獎勵", name=name, colour=discord.Colour(color))
+                    await role.edit(reson="連續簽到3天獎勵", name=name, colour=color)
                     await ctx.author.add_roles(role, reason="連續簽到3天獎勵")
                     await ctx.send(f'{ctx.author.mention} 更新自訂身分組成功')
             else:
