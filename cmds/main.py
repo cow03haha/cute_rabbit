@@ -27,7 +27,7 @@ class Main(Cog_Extension):
         '''你說我回。用法：/say 要說的話'''
         await ctx.send(msg)
     
-    @commands.command(aliases=['about'])
+    @commands.command(aliases=["about"])
     async def info(self, ctx):
         '''bot資訊。'''
         cow = self.bot.get_user(315414910689476609)
@@ -47,10 +47,8 @@ class Main(Cog_Extension):
     
     @commands.check(check_owner)
     @commands.command()
-    
-    async def says(self, ctx, channel: int, *, msg):
+    async def says(self, ctx, channel: discord.TextChannel, *, msg):
         '''在特定頻道傳訊息。用法：/says 頻道id 要說的話'''
-        channel = self.bot.get_channel(channel)
         await channel.send(msg)
 
     @commands.command(aliases=['date'])
