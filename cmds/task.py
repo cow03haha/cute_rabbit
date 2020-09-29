@@ -38,23 +38,22 @@ class Task(Cog_Extension):
                         bcdata = json.load(bcfile)
 
                     for i in bcdata["member_id"]:
-                        data = bcdata[f'{i}']
-                        if data["today"] != True:
-                            data["total"] = 0
+                        if bcdata[f'{i}']["today"] != True:
+                            bcdata[f'{i}']["total"] = 0
                             with open('members.json', 'w', encoding='utf8') as bcfile:
-                                json.dump(data, bcfile, indent=4)
+                                json.dump(bcdata, bcfile, indent=4)
                         else:
-                            data["today"] = False
+                            bcdata[f'{i}']["today"] = False
                             with open('members.json', 'w', encoding='utf8') as bcfile:
-                                json.dump(data, bcfile, indent=4)
+                                json.dump(bcdata, bcfile, indent=4)
                         
-                        if data["total"] < 3 and data["custom_role"] != False:
+                        if bcdata[f'{i}']["total"] < 3 and bcdata[f'{i}']["custom_role"] != False:
                             member = guild.get_member(i)
-                            role = guild.get_role(data["custom_role"])
+                            role = guild.get_role(bcdata[f'{i}']["custom_role"])
                             await member.remove_roles(role)
-                        elif data["total"] >= 3 and data["custom_role"] != False:
+                        elif bcdata[f'{i}']["total"] >= 3 and bcdata[f'{i}']["custom_role"] != False:
                             member = guild.get_member(i)
-                            role = guild.get_role(data["custom_role"])
+                            role = guild.get_role(bcdata[f'{i}']["custom_role"])
                             await member.add_roles(role)
 
                     await channel.send(f'{datetime.datetime.now().strftime("%Y-%m-%d")} 結算成功')
