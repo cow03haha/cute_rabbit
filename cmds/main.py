@@ -51,6 +51,12 @@ class Main(Cog_Extension):
         '''在特定頻道傳訊息。用法：/says 頻道id 要說的話'''
         await channel.send(msg)
 
+    @commands.check(check_owner)
+    @commands.command()
+    async def test(self, ctx):
+        '''for test'''
+        await ctx.send(f'{datetime.datetime.now().strftime("%Y-%m-%d")} 結算成功')
+
     @commands.command(aliases=['date'])
     async def time(self, ctx, tz):
         '''顯示現在的時間。用法：/time 時區，詳細時區列表請參考/help time
