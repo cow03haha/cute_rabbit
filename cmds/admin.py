@@ -78,28 +78,24 @@ class Admin(Cog_Extension):
         if msg.channel.id == 753543338006806528 and msg.content == "簽" and msg.author.bot == False:
             with open("members.json", "r", encoding="utf8") as bcfile:
                 bcdata =json.load(bcfile)
-            data = bcdata[f'{msg.author.id}']
             
             if msg.author.id in bcdata["member_id"]:
-                if data["today"]:
+                if bcdata[f'{msg.author.id}']["today"]:
                     await msg.channel.send(f'{msg.author.mention} 你今天已經簽到了!')
                     return
-                if msg.author.name != data["name"]:
-                    data["name"] = msg.author.name
-                if msg.author.display_name != data["nickname"]:
-                    data["nickname"] = msg.author.display_name
+                if msg.author.name != bcdata[f'{msg.author.id}']["name"]:
+                    bcdata[f'{msg.author.id}']["name"] = msg.author.name
+                if msg.author.display_name != bcdata[f'{msg.author.id}']["nickname"]:
+                    bcdata[f'{msg.author.id}']["nickname"] = msg.author.display_name
                  
-                data["today"] = True
-                data["total"] += 1
+                bcdata[f'{msg.author.id}']["today"] = True
+                bcdata[f'{msg.author.id}']["total"] += 1
             else:
-                data = { "name": msg.author.name, "nickname": msg.author.display_name, "total": 1, "today": True, "custom_role": False}
-                try:
-                    bcdata["member_id"].append(msg.author.id)
-                except:
-                    bcdata["member_id"] = [msg.author.id]
-                
+                bcdata[f'{msg.author.id}'] = { "name": msg.author.name, "nickname": msg.author.display_name, "total": 1, "today": True, "custom_role": False}
+                bcdata["member_id"].append(msg.author.id)
+
             with open("members.json", "w", encoding="utf8") as bcfile:
-                json.dump(data, bcfile, indent=4)
+                json.dump(bcdata, bcfile, indent=4)
             
             await msg.channel.send(f'{msg.author.mention} 簽到成功!，這是你連續簽到的第 **{bcdata[str(msg.author.id)]["total"]}** 天')
         
@@ -244,7 +240,7 @@ class Admin(Cog_Extension):
                 channel = guild.get_channel(745858655005442118)#取得channel資料
                 await payload.member.add_roles(role)#給予role
                 await channel.send(f'【你踩到兔几的陷阱，掉進了新的區域】\n歡迎【{payload.member.mention}】來到了 {channel.mention} \n送上胡蘿蔔，以示友好☆')
-        
+
 
     @commands.Cog.listener()
     async def on_raw_reaction_remove(self, payload):
