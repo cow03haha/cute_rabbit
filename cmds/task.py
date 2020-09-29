@@ -28,35 +28,36 @@ class Task(Cog_Extension):
             while not self.bot.is_closed():
                 now_time = datetime.datetime.now().strftime('%H%M%S')
 
-                if now_time == '000000':
+                if now_time == "000000":
+                    channel = self.bot.get_channel(743768856853479525)
+                    guild = self.bot.get_guild(743292989790748812)
+
+                    await channel.send(f'{datetime.datetime.now().strftime("%Y-%m-%d")} 結算中...')
+
                     with open('members.json', 'r', encoding='utf8') as bcfile:
                         bcdata = json.load(bcfile)
 
                     for i in bcdata["member_id"]:
-                        if bcdata[f'{i}']["today"] != 1:
-                            bcdata[f'{i}']["total"] = 0
-                            bcdata[f'{i}']["today"] = 0
+                        data = bcdata[f'{i}']
+                        if data["today"] != True:
+                            data["total"] = 0
                             with open('members.json', 'w', encoding='utf8') as bcfile:
-                                json.dump(bcdata, bcfile, indent=4)
+                                json.dump(data, bcfile, indent=4)
                         else:
-                            bcdata[f'{i}']["today"] = 0
+                            data["today"] = False
                             with open('members.json', 'w', encoding='utf8') as bcfile:
-                                json.dump(bcdata, bcfile, indent=4)
+                                json.dump(data, bcfile, indent=4)
                         
-                        if bcdata[f'{i}']["total"] < 3 and bcdata[f'{i}']["custom_role"] != False:
-                            guild = self.bot.get_guild(743292989790748812)
+                        if data["total"] < 3 and data["custom_role"] != False:
                             member = guild.get_member(i)
-                            role = guild.get_role(bcdata[f'{i}']["custom_role"])
+                            role = guild.get_role(data["custom_role"])
                             await member.remove_roles(role)
-                        elif bcdata[f'{i}']["total"] >= 3 and bcdata[f'{i}']["custom_role"] != False:
-                            guild = self.bot.get_guild(743292989790748812)
+                        elif data["total"] >= 3 and data["custom_role"] != False:
                             member = guild.get_member(i)
-                            role = guild.get_role(bcdata[f'{i}']["custom_role"])
+                            role = guild.get_role(data["custom_role"])
                             await member.add_roles(role)
 
-
-                    channel = self.bot.get_channel(743768856853479525)
-                    await channel.send("每日結算成功")
+                    await channel.send(f'{datetime.datetime.now().strftime("%Y-%m-%d")} 結算成功')
                         
                     await asyncio.sleep(1)
                 else:
