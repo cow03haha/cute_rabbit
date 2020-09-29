@@ -45,8 +45,7 @@ class Admin(Cog_Extension):
             with open('members.json', 'w', encoding='utf8') as bcfile:
                 json.dump(bcdata, bcfile, indent=4)
         
-        
-
+    
     @commands.Cog.listener()
     async def on_message(self, msg):
         
@@ -76,31 +75,31 @@ class Admin(Cog_Extension):
             await msg.channel.send(embed=embed)
         
         #簽到系統
-        if msg.channel.id == 753543338006806528 and msg.content == '簽' and msg.author.bot == False:
-            with open('members.json', 'r', encoding='utf8') as bcfile:
+        if msg.channel.id == 753543338006806528 and msg.content == "簽" and msg.author.bot == False:
+            with open("members.json", "r", encoding="utf8") as bcfile:
                 bcdata =json.load(bcfile)
+            data = bcdata[f'{msg.author.id}']
             
             if msg.author.id in bcdata["member_id"]:
-                if bcdata[f'{msg.author.id}']["today"]:
+                if data["today"]:
                     await msg.channel.send(f'{msg.author.mention} 你今天已經簽到了!')
                     return
-                if msg.author.name != bcdata[f'{msg.author.id}']["name"]:
-                    bcdata[f'{msg.author.id}']["name"] = msg.author.name
-                if msg.author.display_name != bcdata[f'{msg.author.id}']["nickname"]:
-                    bcdata[f'{msg.author.id}']["nickname"] = msg.author.display_name
+                if msg.author.name != data["name"]:
+                    data["name"] = msg.author.name
+                if msg.author.display_name != data["nickname"]:
+                    data["nickname"] = msg.author.display_name
                  
-                bcdata[f'{msg.author.id}']['today'] = 1
-                bcdata[f'{msg.author.id}']['total'] += 1
+                data["today"] = True
+                data["total"] += 1
             else:
-                data = { 'name': msg.author.name, 'nickname': msg.author.display_name, 'total': 1, 'today': 1, 'custom_role': False}
+                data = { "name": msg.author.name, "nickname": msg.author.display_name, "total": 1, "today": True, "custom_role": False}
                 try:
                     bcdata["member_id"].append(msg.author.id)
                 except:
                     bcdata["member_id"] = [msg.author.id]
-                bcdata[f'{msg.author.id}'] = data
                 
-            with open('members.json', 'w', encoding='utf8') as bcfile:
-                json.dump(bcdata, bcfile, indent=4)
+            with open("members.json", "w", encoding="utf8") as bcfile:
+                json.dump(data, bcfile, indent=4)
             
             await msg.channel.send(f'{msg.author.mention} 簽到成功!，這是你連續簽到的第 **{bcdata[str(msg.author.id)]["total"]}** 天')
         
@@ -154,7 +153,7 @@ class Admin(Cog_Extension):
 
                     await ctx.author.add_roles(role, reason="連續簽到3天獎勵")
                     await ctx.send(f'{ctx.author.mention} 申請自訂身分組成功')
-                elif bcdata[f'{ctx.author.id}']["custom_role"] != False:
+                elif bcdata[f'{ctx.author.id}']["custom_role"]:
                     role = ctx.guild.get_role(bcdata[f'{ctx.author.id}']["custom_role"])
 
                     await role.edit(reson="連續簽到3天獎勵", name=name, colour=color)
