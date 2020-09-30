@@ -27,7 +27,6 @@ class Admin(Cog_Extension):
             embed.set_author(name="牛牛の僕", icon_url="https://imgur.com/za5ATTg.jpg")
             await member.send(embed=embed)
         
-    
     #member退出
     @commands.Cog.listener()
     async def on_member_remove(self, member):
@@ -45,13 +44,12 @@ class Admin(Cog_Extension):
             with open('members.json', 'w', encoding='utf8') as bcfile:
                 json.dump(bcdata, bcfile, indent=4)
         
-    
     @commands.Cog.listener()
     async def on_message(self, msg):
         
         with open('settings.json', 'r', encoding='utf8') as bcfile:
             bcdata = json.load(bcfile)
-        
+
         #驗證系統 
         if msg.content == '同意' and msg.author != self.bot.user and msg.channel.id == int(bcdata['rabbit_guild']['auth_channel']):
             await msg.delete()
@@ -98,7 +96,6 @@ class Admin(Cog_Extension):
                 json.dump(bcdata, bcfile, indent=4)
             
             await msg.channel.send(f'{msg.author.mention} 簽到成功!，這是你連續簽到的第 **{bcdata[str(msg.author.id)]["total"]}** 天')
-        
         
     @commands.command()
     @commands.has_permissions(administrator=True)
@@ -159,7 +156,6 @@ class Admin(Cog_Extension):
                 await ctx.send(f'{ctx.author.mention} 你沒有達到申請資格!')
         else:
             await ctx.send(f'{ctx.author.mention} 你沒有達到申請資格!')
-            
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
@@ -240,8 +236,7 @@ class Admin(Cog_Extension):
                 channel = guild.get_channel(745858655005442118)#取得channel資料
                 await payload.member.add_roles(role)#給予role
                 await channel.send(f'【你踩到兔几的陷阱，掉進了新的區域】\n歡迎【{payload.member.mention}】來到了 {channel.mention} \n送上胡蘿蔔，以示友好☆')
-
-
+        
     @commands.Cog.listener()
     async def on_raw_reaction_remove(self, payload):
         
@@ -276,7 +271,6 @@ class Admin(Cog_Extension):
                 role = guild.get_role(745859173048385561)#取得role資料
                 user = guild.get_member(payload.user_id)
                 await user.remove_roles(role)#移除role
-        
         
 def setup(bot):
     bot.add_cog(Admin(bot))
