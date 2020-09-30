@@ -29,10 +29,15 @@ class Task(Cog_Extension):
                 now_time = datetime.datetime.now().strftime('%H%M%S')
 
                 if now_time == "000000":
-                    channel = self.bot.get_channel(743768856853479525)
                     guild = self.bot.get_guild(743292989790748812)
+                    
+                    channel = self.bot.get_channel(743768856853479525)
+                    notice = await channel.send("結算中...")
 
-                    await channel.send(f'{datetime.datetime.now().strftime("%Y-%m-%d")} 結算中...')
+                    channel = self.bot.get_channel(753543338006806528)
+                    role = guild.get_role(743292989790748812)
+                    msg = await channel.send("結算中...")
+                    await channel.set_permissions(role, send_messages=False)
 
                     with open('members.json', 'r', encoding='utf8') as bcfile:
                         bcdata = json.load(bcfile)
@@ -55,8 +60,12 @@ class Task(Cog_Extension):
                             member = guild.get_member(i)
                             role = guild.get_role(bcdata[f'{i}']["custom_role"])
                             await member.add_roles(role)
+                    
+                    await msg.delete()
+                    await channel.set_permissions(role, send_messages=None)
 
-                    await channel.send(f'{datetime.datetime.now().strftime("%Y-%m-%d")} 結算成功')
+                    channel = self.bot.get_channel(743768856853479525)
+                    await notice.edit(content="結算成功!", delete_after=60)
                         
                     await asyncio.sleep(1)
                 else:
