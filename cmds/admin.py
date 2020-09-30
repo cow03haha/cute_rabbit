@@ -89,7 +89,7 @@ class Admin(Cog_Extension):
                 bcdata[f'{msg.author.id}']["today"] = True
                 bcdata[f'{msg.author.id}']["total"] += 1
             else:
-                bcdata[f'{msg.author.id}'] = { "name": msg.author.name, "nickname": msg.author.display_name, "total": 1, "today": True, "custom_role": False}
+                bcdata[f'{msg.author.id}'] = { "name": msg.author.name, "nickname": msg.author.display_name, "total": 1, "today": True, "custom_role": False, "remain": False}
                 bcdata["member_id"].append(msg.author.id)
 
             with open("members.json", "w", encoding="utf8") as bcfile:

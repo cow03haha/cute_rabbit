@@ -52,7 +52,7 @@ class Task(Cog_Extension):
                             with open('members.json', 'w', encoding='utf8') as bcfile:
                                 json.dump(bcdata, bcfile, indent=4)
                         
-                        if bcdata[f'{i}']["total"] < 3 and bcdata[f'{i}']["custom_role"] != False:
+                        if bcdata[f'{i}']["total"] < 3 and bcdata[f'{i}']["custom_role"] != False and bcdata[f'{i}']["remain"] == False :
                             member = guild.get_member(i)
                             role = guild.get_role(bcdata[f'{i}']["custom_role"])
                             await member.remove_roles(role)
@@ -60,6 +60,9 @@ class Task(Cog_Extension):
                             member = guild.get_member(i)
                             role = guild.get_role(bcdata[f'{i}']["custom_role"])
                             await member.add_roles(role)
+                        
+                        if bcdata[f'{i}']["total"] >= 14:
+                            bcdata[f'{i}']["remain"] = True
                     
                     await msg.delete()
                     await channel.set_permissions(role, send_messages=None)
