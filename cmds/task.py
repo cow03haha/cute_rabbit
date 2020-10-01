@@ -65,6 +65,7 @@ class Task(Cog_Extension):
                             bcdata[f'{i}']["remain"] = True
                     
                     await msg.delete()
+                    role = guild.get_role(743292989790748812)
                     await channel.set_permissions(role, send_messages=None)
 
                     channel = self.bot.get_channel(743768856853479525)
