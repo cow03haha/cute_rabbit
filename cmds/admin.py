@@ -118,7 +118,7 @@ class Admin(Cog_Extension):
                 today = "否"
 
             if custom_role:
-                custom_role = ctx.guild.get_role(user["custom_role"])
+                custom_role = ctx.guild.get_role(custom_role)
                 role_str =f'是\n自訂身分組名稱：{custom_role.mention}'
             else:
                 role_str="否"
