@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 from cores.classes import Cog_Extension
+from bot import check_owner
 import random
 import os
 import datetime
@@ -48,8 +49,8 @@ class Fun(Cog_Extension):
         '''選擇障礙專用。用法：/選擇 選項1 選項2 選項3...'''
         choice = random.choice(msg.split())
         await ctx.send(f'我選擇... {choice}!')
-
-    @commands.has_role(612613325766787072)
+    
+    @commands.check(check_owner)
     @commands.command()
     async def 內戰(self, ctx, str_time, end_time, *, description):
         '''傳說區內戰用。用法詳情請使用/help 內戰
@@ -109,7 +110,7 @@ class Fun(Cog_Extension):
         fight = await ctx.send(embed=embed)
         await fight.add_reaction('✅')
     
-    @commands.has_role(612613325766787072)
+    @commands.check(check_owner)
     @commands.command()
     async def 取消內戰(self, ctx):
         '''取消內戰(限管理員使用)'''
@@ -129,7 +130,6 @@ class Fun(Cog_Extension):
         
         await fight.delete()
         await ctx.send('內戰取消成功')
-    
     '''
     @commands.Cog.listener()
     async def on_raw_reaction_add(self, payload):
@@ -151,5 +151,20 @@ class Fun(Cog_Extension):
                 await user.send('退出內戰成功')
     '''
 
+    @commands.check(check_owner)
+    @commands.command(aliases=["vcconnect", "vcjoin"])
+    async def voiceconnect(self, ctx, target: discord.VoiceChannel):
+        '''連接到特定頻道'''
+        
+        global vClient
+        vClient = await target.connect(reconnect=True)
+    
+    @commands.check(check_owner)
+    @commands.command(aliases=["vcdisconnect", "vcleave"])
+    async def voicedisconnect(self, ctx):
+        '''從特定頻道斷線...'''
+
+        await vClient.disconnect()
+        
 def setup(bot):
     bot.add_cog(Fun(bot))
