@@ -162,7 +162,7 @@ class Fun(Cog_Extension):
     @commands.check(check_owner)
     @commands.command(aliases=["vcdisconnect", "vcleave"])
     async def voicedisconnect(self, ctx):
-        '''從特定頻道斷線...'''
+        '''從特定頻道斷線'''
 
         await vClient.disconnect()
         
