@@ -63,6 +63,8 @@ class Task(Cog_Extension):
                         
                         if bcdata[f'{i}']["total"] >= 14:
                             bcdata[f'{i}']["remain"] = True
+                            with open('members.json', 'w', encoding='utf8') as bcfile:
+                                json.dump(bcdata, bcfile, indent=4)
                     
                     await msg.delete()
                     role = guild.get_role(743292989790748812)
