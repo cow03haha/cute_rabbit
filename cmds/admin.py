@@ -99,15 +99,13 @@ class Admin(Cog_Extension):
         
     @commands.command()
     @commands.has_permissions(administrator=True)
-    async def status(self, ctx, member: int=1):
+    async def status(self, ctx, member: discord.Member="me"):
         '''檢查成員簽到狀態。用法/status @成員'''
         with open('members.json', 'r', encoding='utf8') as bcfile:
             bcdata =json.load(bcfile)
 
-        if member == 1:
+        if member == "me":
             member = ctx.author
-        else:
-            member = ctx.guild.get_member(member)
 
         if member.id in bcdata["member_id"]:
             user = bcdata[f'{member.id}']
@@ -140,10 +138,14 @@ class Admin(Cog_Extension):
     @commands.command(aliases=['申請'])
     async def apply(self, ctx, name, color: discord.Colour):
         '''申請自訂身分組。用法：/申請 名稱 色碼'''
-        if ctx.channel.id != 753542568939356220:
+        
+        with open('settings.json', 'r', encoding='utf8') as bcfile:
+            bcdata = json.load(bcfile)
+
+        if ctx.channel.id != 753542568939356220 and ctx.author.id not in bcdata["owner"]:
             await ctx.send("你不能在這個頻道使用此指令!")
             return
-            
+
         with open('members.json', 'r', encoding='utf8') as bcfile:
             bcdata = json.load(bcfile)
         
