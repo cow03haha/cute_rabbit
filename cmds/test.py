@@ -8,10 +8,12 @@ class Test(Cog_Extension):
     
     @commands.command()
     @commands.check(check_owner)
-    async def test(self, ctx):
+    async def test(self, ctx, user: discord.User="me"):
         '''for test'''
-        await ctx.send(f'{ctx.command.help}')
-        print(ctx.message.author.mention)
+        if user == "me":
+            await ctx.send(ctx.message.author.avatar_url)
+        else:
+            await ctx.send(user.avatar_url)
 
 def setup(bot):
     bot.add_cog(Test(bot))
