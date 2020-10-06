@@ -99,11 +99,16 @@ class Admin(Cog_Extension):
         
     @commands.command()
     @commands.has_permissions(administrator=True)
-    async def status(self, ctx, member: discord.User):
+    async def status(self, ctx, member: int=1):
         '''檢查成員簽到狀態。用法/status @成員'''
         with open('members.json', 'r', encoding='utf8') as bcfile:
             bcdata =json.load(bcfile)
-        
+
+        if member == 1:
+            member = ctx.author
+        else:
+            member = ctx.guild.get_member(member)
+
         if member.id in bcdata["member_id"]:
             user = bcdata[f'{member.id}']
             today = user["today"]
@@ -134,6 +139,7 @@ class Admin(Cog_Extension):
     
     @commands.command(aliases=['申請'])
     async def apply(self, ctx, name, color: discord.Colour):
+        '''申請自訂身分組。用法：/申請 名稱 色碼'''
         if ctx.channel.id != 753542568939356220:
             await ctx.send("你不能在這個頻道使用此指令!")
             return
@@ -196,7 +202,7 @@ class Admin(Cog_Extension):
         await ctx.send(f'清理{time}之後的訊息成功', delete_after=3)
     
     @commands.command()
-    @commands.has_permissions(manage_channels=True)
+    @commands.has_permissions(move_members=True)
     async def voicemoveall(self, ctx, origin: discord.VoiceChannel, target: discord.VoiceChannel, reason="N/A"):
         """將全部人從一個頻道移到另外一個頻道。用法：/voicemoveall 原本頻道id 目標頻道id"""
         if ctx.author.guild_permissions.move_members == True:
