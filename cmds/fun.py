@@ -50,8 +50,8 @@ class Fun(Cog_Extension):
         choice = random.choice(msg.split())
         await ctx.send(f'我選擇... {choice}!')
     
-    @commands.check(check_owner)
     @commands.command()
+    @commands.check(check_owner)
     async def 內戰(self, ctx, str_time, end_time, *, description):
         '''傳說區內戰用。用法詳情請使用/help 內戰
         用法：/內戰 開始時間 報名截止時間 備註
@@ -110,8 +110,8 @@ class Fun(Cog_Extension):
         fight = await ctx.send(embed=embed)
         await fight.add_reaction('✅')
     
-    @commands.check(check_owner)
     @commands.command()
+    @commands.check(check_owner)
     async def 取消內戰(self, ctx):
         '''取消內戰(限管理員使用)'''
         with open('settings.json', 'r', encoding='utf8') as bcfile:
