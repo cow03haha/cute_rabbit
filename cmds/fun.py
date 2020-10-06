@@ -44,8 +44,8 @@ class Fun(Cog_Extension):
         reply = ''.join(random.choices(fortune, weights=pro))
         await ctx.send(f'你抽到了 "{reply}"')
     
-    @commands.command()
-    async def 選擇(self, ctx, *, msg):
+    @commands.command(aliases=['選擇'])
+    async def choice(self, ctx, *, msg):
         '''選擇障礙專用。用法：/選擇 選項1 選項2 選項3...'''
         choice = random.choice(msg.split())
         await ctx.send(f'我選擇... {choice}!')
