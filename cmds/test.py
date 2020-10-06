@@ -17,7 +17,7 @@ class Test(Cog_Extension):
     @commands.check(check_owner)
     async def test(self, ctx):
         '''for test'''
-        await ctx.send(f'{datetime.datetime.now().strftime("%Y-%m-%d")} 結算成功')
+        await ctx.send("OOF")
 
 def setup(bot):
     bot.add_cog(Test(bot))
