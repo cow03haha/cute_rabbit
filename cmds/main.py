@@ -45,17 +45,11 @@ class Main(Cog_Extension):
         await ctx.message.delete()
         await ctx.send(msg)
     
-    @commands.check(check_owner)
     @commands.command()
+    @commands.check(check_owner)
     async def says(self, ctx, channel: discord.TextChannel, *, msg):
         '''在特定頻道傳訊息。用法：/says 頻道id 要說的話'''
         await channel.send(msg)
-
-    @commands.check(check_owner)
-    @commands.command()
-    async def test(self, ctx):
-        '''for test'''
-        await ctx.send(f'{datetime.datetime.now().strftime("%Y-%m-%d")} 結算成功')
 
     @commands.command(aliases=['date'])
     async def time(self, ctx, tz):
