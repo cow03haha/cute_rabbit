@@ -8,6 +8,20 @@ import pytz
 
 class Main(Cog_Extension):
     '''基本指令'''
+
+    @commands.Cog.listener()
+    async def on_command_error(self, ctx, error):
+        if type(error) in [discord.ext.commands.errors.CheckFailure, discord.ext.commands.errors.MissingPermissions]:
+            await ctx.send("你的權限不足以使用此指令")
+        elif type(error) == discord.ext.commands.errors.MissingRequiredArgument:
+            await ctx.send(f'缺少必要參數，使用 `/help {ctx.command.name}` 來了解使用方法')
+        elif type(error) == discord.ext.commands.errors.BadArgument:
+            await ctx.send(f'錯誤參數，使用 `/help {ctx.command.name}` 來了解使用方法')
+        elif type(error) == discord.ext.commands.errors.CommandNotFound:
+            await ctx.send(f'找不到 `{ctx.invoked_with}` 這個指令，輸入 `/help` 來獲得所有可用指令')
+        else:
+            await ctx.send(f'不明錯誤，如持續出現請聯絡 <@315414910689476609> 並提供以下資訊\n```{error}\n{type(error)}```')
+
     #ping指令(discord給的單位為秒，直接乘於1000得到毫秒(ms)，在用round取整數)
     @commands.command()
     async def ping(self, ctx):
@@ -52,7 +66,7 @@ class Main(Cog_Extension):
         await channel.send(msg)
 
     @commands.command(aliases=['date'])
-    async def time(self, ctx, tz):
+    async def time(self, ctx, tz="tw"):
         '''顯示現在的時間。用法：/time 時區，詳細時區列表請參考/help time
         日本 = jp
         台灣 = tw
