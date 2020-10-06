@@ -64,6 +64,15 @@ class Main(Cog_Extension):
     async def says(self, ctx, channel: discord.TextChannel, *, msg):
         '''在特定頻道傳訊息。用法：/says 頻道id 要說的話'''
         await channel.send(msg)
+    
+    @commands.command()
+    @commands.check(check_owner)
+    async def avatar(self, ctx, user: discord.User="me"):
+        '''取得特定使用者的頭像。用法：/avatar 使用者[id, mention]'''
+        if user == "me":
+            await ctx.send(ctx.message.author.avatar_url)
+        else:
+            await ctx.send(user.avatar_url)
 
     @commands.command(aliases=['date'])
     async def time(self, ctx, tz="tw"):
