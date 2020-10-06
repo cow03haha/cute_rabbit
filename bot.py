@@ -22,22 +22,22 @@ def check_owner(ctx):
     owner = [315414910689476609,  507946865824890890]
     return ctx.message.author.id in owner
 
-@commands.check(check_owner)
 @bot.command()
+@commands.check(check_owner)
 async def load(ctx, extension):
     '''載入特定模組。用法：/load 模組名稱'''
     bot.load_extension(f'cmds.{extension}')
     await ctx.send(f'{extension} 模組載入完成')
 
-@commands.check(check_owner)
 @bot.command()
+@commands.check(check_owner)
 async def unload(ctx, extension):
     '''卸載特定模組。用法：/unload 模組名稱'''
     bot.unload_extension(f'cmds.{extension}')
     await ctx.send(f'{extension} 模組卸載完成')
 
-@commands.check(check_owner)
 @bot.command()
+@commands.check(check_owner)
 async def reload(ctx, extension):
     '''重新載入特定模組。用法：/reload 模組名稱'''
     bot.reload_extension(f'cmds.{extension}')
