@@ -8,12 +8,9 @@ class Test(Cog_Extension):
     
     @commands.command()
     @commands.check(check_owner)
-    async def test(self, ctx, user: discord.User="me"):
+    async def test(self, ctx):
         '''for test'''
-        if user == "me":
-            await ctx.send(ctx.message.author.avatar_url)
-        else:
-            await ctx.send(user.avatar_url)
-
+        mentions = discord.AllowedMentions(everyone=True)
+        await ctx.send("@everyone", allowed_mentions=mentions)
 def setup(bot):
     bot.add_cog(Test(bot))
