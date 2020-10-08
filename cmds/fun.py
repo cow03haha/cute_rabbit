@@ -49,7 +49,46 @@ class Fun(Cog_Extension):
         '''選擇障礙專用。用法：/選擇 選項1 選項2 選項3...'''
         choice = random.choice(msg.split())
         await ctx.send(f'我選擇... {choice}!')
-    
+
+    @commands.command(aliases=['list'])
+    async def reminder(self, ctx, method, work="a"):
+        '''個人備忘錄。用法：/list 動作 (事項)
+        可選的動作有：add(增加代辦事項)、remove(移除代辦事項)、check(檢查代辦事項)
+        範例：/list check(檢查有哪些代辦事項)
+            /list add 吃早餐(增加代辦事項吃早餐)'''
+        with open('members.json', 'r', encoding='utf8') as bcfile:
+            bcdata = json.load(bcfile)
+
+        if method == "check":
+            if bcdata[f'{ctx.author.id}']["reminde_list"]:
+                cow = self.bot.get_user(315414910689476609)
+                tw = pytz.timezone('Asia/Taipei')
+                k = 0
+                embed = discord.Embed(title="代辦事項", color=0xf5ed00, timestamp=datetime.datetime.now(tz=tw))
+                embed.set_author(name=cow.name, icon_url=str(cow.avatar_url))
+                embed.set_thumbnail(url=str(self.bot.user.avatar_url))
+                for i in bcdata[f'{ctx.author.id}']["reminde_list"]:
+                    k += 1
+                    embed.add_field(name=f'事項{k}', value=i, inline=True)
+                await ctx.author.send(embed=embed)
+            else:
+                await ctx.author.send("沒有代辦事項")
+        elif method == "add":
+            bcdata[f'{ctx.author.id}']["reminde_list"].append(work)
+            with open('members.json', 'w', encoding='utf8') as bcfile:
+                json.dump(bcdata, bcfile, indent=4)
+            await ctx.author.send(f'新增 `{work}` 事項成功')
+        elif method == "remove":
+            if work in bcdata[f'{ctx.author.id}']["reminde_list"]:
+                bcdata[f'{ctx.author.id}']["reminde_list"].remove(work)
+                with open('members.json', 'w', encoding='utf8') as bcfile:
+                    json.dump(bcdata, bcfile, indent=4)
+                await ctx.author.send(f'移除 `{work}` 事項成功')
+            else:
+                await ctx.author.send(f'你的代辦事項中沒有 `{work}` 這個事項')
+        else:
+            await ctx.author.send("錯誤的動作選項")
+            
     @commands.command()
     @commands.check(check_owner)
     async def 內戰(self, ctx, str_time, end_time, *, description):
