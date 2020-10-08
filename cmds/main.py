@@ -39,7 +39,8 @@ class Main(Cog_Extension):
     @commands.command()
     async def say(self, ctx, *, msg):
         '''你說我回。用法：/say 要說的話'''
-        await ctx.send(msg)
+        mentions = discord.AllowedMentions(everyone=False, roles=False)
+        await ctx.send(msg, allowed_mentions=mentions)
     
     @commands.command(aliases=["about"])
     async def info(self, ctx):
@@ -47,7 +48,7 @@ class Main(Cog_Extension):
         cow = self.bot.get_user(315414910689476609)
         tw = pytz.timezone('Asia/Taipei')
         embed=discord.Embed(title="about", description="Rabbit♡Fairy專用bot", color=0xf5ed00, timestamp=datetime.datetime.now(tz=tw))
-        embed.set_author(name="cow03", icon_url=str(cow.avatar_url))
+        embed.set_author(name=cow.name, icon_url=str(cow.avatar_url))
         embed.set_thumbnail(url=str(self.bot.user.avatar_url))
         embed.add_field(name="作者", value="<@315414910689476609>", inline=True)
         embed.add_field(name="support server", value="[link](https://discord.gg/tXvgBfu)", inline=True)
@@ -57,7 +58,8 @@ class Main(Cog_Extension):
     async def sayd(self, ctx, *, msg):
         '''你說我回(你傳的訊息會刪除)。用法：/sayd 要說的話'''
         await ctx.message.delete()
-        await ctx.send(msg)
+        mentions = discord.AllowedMentions(everyone=False, roles=False)
+        await ctx.send(msg, allowed_mentions=mentions)
     
     @commands.command()
     @commands.check(check_owner)
