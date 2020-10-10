@@ -51,43 +51,120 @@ class Fun(Cog_Extension):
         await ctx.send(f'我選擇... {choice}!')
 
     @commands.command(aliases=['list'])
-    async def reminder(self, ctx, method, work="a"):
-        '''個人備忘錄。用法：/list 動作 (事項)
+    @commands.check(check_owner)
+    async def reminder(self, ctx, target, method, *args):
+        '''個人備忘錄。用法：/list 對象 動作 (事項/時間)
         可選的動作有：add(增加代辦事項)、remove(移除代辦事項)、check(檢查代辦事項)
         範例：/list check(檢查有哪些代辦事項)
-            /list add 吃早餐(增加代辦事項吃早餐)'''
+            /list add 吃早餐  約會(增加代辦事項吃早餐)跟約會'''
         with open('members.json', 'r', encoding='utf8') as bcfile:
             bcdata = json.load(bcfile)
+        if target in ["matter", "事項"]:
+            if method == "check":
+                if bcdata[f'{ctx.author.id}']["remind_list"]:
+                    cow = self.bot.get_user(315414910689476609)
+                    tw = pytz.timezone('Asia/Taipei')
+                    k = 0
+                    embed = discord.Embed(title="代辦事項", color=0xf5ed00, timestamp=datetime.datetime.now(tz=tw))
+                    embed.set_author(name=cow.name, icon_url=str(cow.avatar_url))
+                    embed.set_thumbnail(url=str(self.bot.user.avatar_url))
 
-        if method == "check":
-            if bcdata[f'{ctx.author.id}']["reminde_list"]:
-                cow = self.bot.get_user(315414910689476609)
-                tw = pytz.timezone('Asia/Taipei')
-                k = 0
-                embed = discord.Embed(title="代辦事項", color=0xf5ed00, timestamp=datetime.datetime.now(tz=tw))
-                embed.set_author(name=cow.name, icon_url=str(cow.avatar_url))
-                embed.set_thumbnail(url=str(self.bot.user.avatar_url))
-                for i in bcdata[f'{ctx.author.id}']["reminde_list"]:
-                    k += 1
-                    embed.add_field(name=f'事項{k}', value=i, inline=True)
-                await ctx.author.send(embed=embed)
-            else:
-                await ctx.author.send("沒有代辦事項")
-        elif method == "add":
-            bcdata[f'{ctx.author.id}']["reminde_list"].append(work)
-            with open('members.json', 'w', encoding='utf8') as bcfile:
-                json.dump(bcdata, bcfile, indent=4)
-            await ctx.author.send(f'新增 `{work}` 事項成功')
-        elif method == "remove":
-            if work in bcdata[f'{ctx.author.id}']["reminde_list"]:
-                bcdata[f'{ctx.author.id}']["reminde_list"].remove(work)
+                    for i in bcdata[f'{ctx.author.id}']["remind_list"]:
+                        k += 1
+                        embed.add_field(name=f'事項{k}', value=i, inline=True)
+
+                    await ctx.author.send(embed=embed)
+                else:
+                    await ctx.author.send("沒有代辦事項")
+            elif method == "add":
+                if args:
+                    for i in args:
+                        if i in bcdata[f'{ctx.author.id}']["remind_list"]:
+                            await ctx.author.send(f'事項 `{i}` 已經存在了')
+                            return
+
+                        bcdata[f'{ctx.author.id}']["remind_list"].append(i)
+
+                    with open('members.json', 'w', encoding='utf8') as bcfile:
+                        json.dump(bcdata, bcfile, indent=4)
+
+                    item = " ".join(args)
+                    await ctx.author.send(f'新增 `{item}` 事項成功')
+                else:
+                    await ctx.author.send("你沒有指定要增加的代辦事項")
+            elif method == "remove":
+                for i in args:
+                    if i not in bcdata[f'{ctx.author.id}']["remind_list"]:
+                        await ctx.author.send(f'你的事項中沒有 `{i}` 這個事項')
+                        return
+                        
+                    bcdata[f'{ctx.author.id}']["remind_list"].remove(i)
+
+
                 with open('members.json', 'w', encoding='utf8') as bcfile:
                     json.dump(bcdata, bcfile, indent=4)
-                await ctx.author.send(f'移除 `{work}` 事項成功')
+
+                item = " ".join(args)
+                await ctx.author.send(f'移除事項 `{item}` 成功')
             else:
-                await ctx.author.send(f'你的代辦事項中沒有 `{work}` 這個事項')
+                await ctx.author.send("錯誤的動作選項")
+        elif target in ["time", "時間"]:
+            if method == "check":
+                if bcdata[f'{ctx.author.id}']["remind_time"]:
+                    cow = self.bot.get_user(315414910689476609)
+                    tw = pytz.timezone('Asia/Taipei')
+                    k = 0
+                    embed = discord.Embed(title="提醒時間", color=0xf5ed00, timestamp=datetime.datetime.now(tz=tw))
+                    embed.set_author(name=cow.name, icon_url=str(cow.avatar_url))
+                    embed.set_thumbnail(url=str(self.bot.user.avatar_url))
+
+                    for i in bcdata[f'{ctx.author.id}']["remind_time"]:
+                        k += 1
+                        embed.add_field(name=f'時間{k}', value=i, inline=True)
+
+                    await ctx.author.send(embed=embed)
+                else:
+                    await ctx.author.send("沒有設定提醒時間")
+            elif method == "add":
+                if args:
+                    for i in args:
+                        if i in bcdata[f'{ctx.author.id}']["remind_time"]:
+                            await ctx.author.send(f'提醒時間 `{i}` 已經存在了')
+                            return
+
+                        if len(i) > 6:
+                            await ctx.author.send("錯誤的時間格式")
+                            return
+
+                        bcdata[f'{ctx.author.id}']["remind_time"].append(i)
+                        bcdata["remind_time"].append(i)
+
+                    with open('members.json', 'w', encoding='utf8') as bcfile:
+                        json.dump(bcdata, bcfile, indent=4)
+
+                    item = " ".join(args)
+                    await ctx.author.send(f'新增提醒時間 `{item}` 成功')
+                else:
+                    await ctx.author.send("你沒有指定要增加的提醒時間")
+            elif method == "remove":
+                for i in args:
+                    if i not in bcdata[f'{ctx.author.id}']["remind_time"]:
+                        await ctx.author.send(f'你的提醒時間中沒有 `{i}` 這個時間')
+                        return
+                        
+                    bcdata[f'{ctx.author.id}']["remind_time"].remove(i)
+                    bcdata["remind_time"].remove(i)
+
+
+                with open('members.json', 'w', encoding='utf8') as bcfile:
+                    json.dump(bcdata, bcfile, indent=4)
+
+                item = " ".join(args)
+                await ctx.author.send(f'移除提醒時間 `{item}` 成功')
+            else:
+                await ctx.author.send("錯誤的動作選項")
         else:
-            await ctx.author.send("錯誤的動作選項")
+            await ctx.author.send("錯誤的對象")
             
     @commands.command()
     @commands.check(check_owner)
