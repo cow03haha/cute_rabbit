@@ -74,37 +74,46 @@ class Task(Cog_Extension):
                     channel = self.bot.get_channel(743768856853479525)
                     await notice.edit(content="結算成功!", delete_after=60)
                         
-                    await asyncio.sleep(1)
+                    await asyncio.sleep(60)
                 else:
                     await asyncio.sleep(1)
                     pass
 
         self.bg_task = self.bot.loop.create_task(daily_check())
-        '''
+        
         async def reminder():
             await self.bot.wait_until_ready()
             
             while not self.bot.is_closed():
                 now_time = datetime.datetime.now().strftime('%H%M%S')
-                if now_time in ["160000", "211210"]:
-                    user = self.bot.get_user(315414910689476609)
-                    with open('members.json', 'r', encoding='utf8') as bcfile:
-                        bcdata = json.load(bcfile)
+                
+                with open('members.json', 'r', encoding='utf8') as bcfile:
+                    bcdata = json.load(bcfile)
+
+                if now_time in bcdata["remind_time"]:
                     for i in bcdata["member_id"]:
-                        if bcdata[f'{i}']["reminde_list"]:
+                        if "remind_list" in bcdata[f'{i}'] :
+                            user = self.bot.get_user(i)
                             cow = self.bot.get_user(315414910689476609)
                             tw = pytz.timezone('Asia/Taipei')
+                            k = 0
                             embed = discord.Embed(title="備忘錄", color=0xf5ed00, timestamp=datetime.datetime.now(tz=tw))
                             embed.set_author(name=cow.name, icon_url=str(cow.avatar_url))
                             embed.set_thumbnail(url=str(self.bot.user.avatar_url))
-                            for j in bcdata[f'{i}']["reminde_list"]:
+
+                            for j in bcdata[f'{i}']["remind_list"]:
                                 k += 1
                                 embed.add_field(name=str(k), value=j, inline=True)
+
                             await user.send(embed=embed)
+
                     await asyncio.sleep(1)
+                else:
+                    await asyncio.sleep(1)
+                    pass
             
         self.bg_task = self.bot.loop.create_task(reminder())
-        '''
+        
         '''
         async def fight_task():
             await self.bot.wait_until_ready()
