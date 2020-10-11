@@ -38,6 +38,9 @@ class Fun(Cog_Extension):
         
         if msg.content in ["oof", "OOF"]:
             await msg.channel.send(msg.content)
+        
+        if "egg" in msg.content:
+            await msg.add_reaction("🥚")
     
     @commands.command(aliases=['抽'])
     async def 抽籤(self, ctx):
