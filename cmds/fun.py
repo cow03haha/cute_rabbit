@@ -35,6 +35,9 @@ class Fun(Cog_Extension):
                 bcdata =json.load(bcfile)
                 
             await msg.channel.send(random.choice(bcdata['cow_msg']))
+        
+        if msg.content in ["oof", "OOF"]:
+            await msg.channel.send(msg.content)
     
     @commands.command(aliases=['抽'])
     async def 抽籤(self, ctx):
