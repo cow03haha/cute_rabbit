@@ -10,7 +10,7 @@ class Test(Cog_Extension):
     @commands.check(check_owner)
     async def test(self, ctx):
         '''for test'''
-        mentions = discord.AllowedMentions(everyone=True)
-        await ctx.send("@everyone", allowed_mentions=mentions)
+        if 0:
+            await ctx.send("1")
 def setup(bot):
     bot.add_cog(Test(bot))
