@@ -204,7 +204,7 @@ class Admin(Cog_Extension):
         await ctx.send(f'清理{time}之後的訊息成功', delete_after=3)
     
     @commands.command()
-    @commands.has_permissions(move_members=True)
+    @commands.has_permissions(manage_channels=True)
     async def voicemoveall(self, ctx, origin: discord.VoiceChannel, target: discord.VoiceChannel, reason="N/A"):
         """將全部人從一個頻道移到另外一個頻道。用法：/voicemoveall 原本頻道id 目標頻道id"""
         if ctx.author.guild_permissions.move_members == True:
