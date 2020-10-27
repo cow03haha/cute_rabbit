@@ -8,7 +8,7 @@ import pytz
 
 class Main(Cog_Extension):
     '''基本指令'''
-
+    
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
         if type(error) in [discord.ext.commands.errors.CheckFailure, discord.ext.commands.errors.MissingPermissions]:
@@ -21,6 +21,7 @@ class Main(Cog_Extension):
             await ctx.send(f'找不到 `{ctx.invoked_with}` 這個指令，輸入 `/help` 來獲得所有可用指令')
         else:
             await ctx.send(f'不明錯誤，如持續出現請聯絡 <@315414910689476609> 並提供以下資訊\n```{error}\n{type(error)}```')
+    
 
     #ping指令(discord給的單位為秒，直接乘於1000得到毫秒(ms)，在用round取整數)
     @commands.command()
