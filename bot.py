@@ -8,8 +8,10 @@ import random
 with open('settings.json', 'r', encoding='utf8') as bcfile:
     bcdata = json.load(bcfile)
 
+intents = discord.Intents.all()
+
 #代表bot本身
-bot = commands.Bot(command_prefix='/')
+bot = commands.Bot(command_prefix='/', intents=intents)
 
 #bot上線
 @bot.event
