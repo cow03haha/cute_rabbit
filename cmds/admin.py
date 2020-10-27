@@ -150,7 +150,7 @@ class Admin(Cog_Extension):
             bcdata = json.load(bcfile)
         
         if ctx.author.id in bcdata["member_id"]:
-            if bcdata[f'{ctx.author.id}']["total"] >= 3:
+            if bcdata[f'{ctx.author.id}']["total"] >= 3 or bcdata[f'{ctx.author.id}']["remain"]:
                 if bcdata[f'{ctx.author.id}']["custom_role"] == False:
                     line = ctx.guild.get_role(753989478464487505)
 
