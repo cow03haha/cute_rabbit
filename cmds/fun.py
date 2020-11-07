@@ -41,6 +41,9 @@ class Fun(Cog_Extension):
         
         if "egg" in msg.content:
             await msg.add_reaction("🥚")
+
+        if "A" in msg.content:
+            await msg.add_reaction("🇦")
     
     @commands.command(aliases=['抽'])
     async def 抽籤(self, ctx):
