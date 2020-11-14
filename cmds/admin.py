@@ -254,6 +254,24 @@ class Admin(Cog_Extension):
                 await payload.member.add_roles(role)#給予role
                 await channel.send(f'【你踩到兔几的陷阱，掉進了新的區域】\n歡迎【{payload.member.mention}】來到了 {channel.mention} \n送上胡蘿蔔，以示友好☆')
         
+        #reaction role lol
+        if payload.message_id == 746320857516998816:
+            if str(payload.emoji) == '<:PCLoL:777050607173369866>':
+                guild = self.bot.get_guild(payload.guild_id)#取得server id
+                role = guild.get_role(777038709458731009)#取得role資料
+                channel = guild.get_channel(777004829880877078)#取得channel資料
+                await payload.member.add_roles(role)#給予role
+                await channel.send(f'【你踩到兔几的陷阱，掉進了新的區域】\n歡迎【{payload.member.mention}】來到了 {channel.mention} \n送上胡蘿蔔，以示友好☆')
+        
+        #reaction role lol:moblie
+        if payload.message_id == 746320857516998816:
+            if str(payload.emoji) == '<:PELoL:777050767902113823>':
+                guild = self.bot.get_guild(payload.guild_id)#取得server id
+                role = guild.get_role(777038835694567424)#取得role資料
+                channel = guild.get_channel(777004160759234570)#取得channel資料
+                await payload.member.add_roles(role)#給予role
+                await channel.send(f'【你踩到兔几的陷阱，掉進了新的區域】\n歡迎【{payload.member.mention}】來到了 {channel.mention} \n送上胡蘿蔔，以示友好☆')
+        
     @commands.Cog.listener()
     async def on_raw_reaction_remove(self, payload):
         
