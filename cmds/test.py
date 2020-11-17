@@ -12,18 +12,18 @@ class Test(Cog_Extension):
     async def test(self, ctx):
         '''for test'''
         # Gets voice channel of message author
-        voice_channel = ctx.author.channel
-        channel = None
+        voice_channel = ctx.author.voice.channel
+
         if voice_channel != None:
-            channel = voice_channel.name
             vc = await voice_channel.connect()
-            vc.play(discord.FFmpegPCMAudio(executable="C:/ffmpeg/bin/ffmpeg.exe", source="C:<path_to_file>"))
+            vc.play(discord.FFmpegPCMAudio(executable="C:\\Python\\Python37\\Scripts\\ffmpeg.exe", source="audio/fbi open up.mp3"))
             # Sleep while audio is playing.
             while vc.is_playing():
-                sleep(.1)
+                asyncio.sleep(0.1)
             await vc.disconnect()
         else:
             await ctx.send(str(ctx.author.name) + "is not in a channel.")
+
         # Delete command after the audio is done playing.
         await ctx.message.delete()
 
