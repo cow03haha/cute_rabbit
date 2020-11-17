@@ -16,7 +16,7 @@ class Test(Cog_Extension):
 
         if voice_channel != None:
             vc = await voice_channel.connect()
-            vc.play(discord.FFmpegPCMAudio(executable="C:\\Python\\Python37\\Scripts\\ffmpeg.exe", source="audio/fbi open up.mp3"))
+            vc.play(discord.FFmpegPCMAudio(executable="C:\\Python\\Python37\\Scripts\\ffmpeg.exe", source="audio/fbi open up.webm"))
             # Sleep while audio is playing.
             while vc.is_playing():
                 asyncio.sleep(0.1)
@@ -25,7 +25,7 @@ class Test(Cog_Extension):
             await ctx.send(str(ctx.author.name) + "is not in a channel.")
 
         # Delete command after the audio is done playing.
-        await ctx.message.delete()
+        #await ctx.message.delete()
 
 def setup(bot):
     bot.add_cog(Test(bot))
