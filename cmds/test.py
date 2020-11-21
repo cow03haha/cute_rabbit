@@ -19,7 +19,7 @@ class Test(Cog_Extension):
             vc.play(discord.FFmpegPCMAudio(executable="C:\\Python\\Python37\\Scripts\\ffmpeg.exe", source="audio/fbi open up.webm"))
             # Sleep while audio is playing.
             while vc.is_playing():
-                asyncio.sleep(0.1)
+                await asyncio.sleep(0.1)
             await vc.disconnect()
         else:
             await ctx.send(str(ctx.author.name) + "is not in a channel.")
