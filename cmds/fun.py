@@ -7,6 +7,7 @@ import os
 import datetime
 import pytz
 import json
+import asyncio
 
 class Fun(Cog_Extension):
     '''娛樂指令'''
@@ -58,6 +59,35 @@ class Fun(Cog_Extension):
         '''選擇障礙專用。用法：/選擇 選項1 選項2 選項3...'''
         choice = random.choice(msg.split())
         await ctx.send(f'我選擇... {choice}!')
+    
+    @commands.command(aliases=["p"])
+    @commands.check(check_owner)
+    async def play(self, ctx, *, name):
+        '''for test'''
+        # Gets voice channel of message author
+        songs = []
+        for filename in os.listdir('./audio'):
+            if filename.endswith('.webm'):
+                songs.append(filename[:-5])
+        
+        vc = ctx.author.voice
+
+        if vc != None:
+            if name == "list":
+                await ctx.send("\n".join(songs))
+                return
+            if name not in songs:
+                await ctx.send("歌曲庫裡沒有這首歌")
+                return
+            
+            vc_channel = await vc.channel.connect()
+            vc_channel.play(discord.FFmpegPCMAudio(executable="C:\\Python\\Python37\\Scripts\\ffmpeg.exe", source=f'audio/{name}.webm'))
+            # Sleep while audio is playing.
+            while vc_channel.is_playing():
+                await asyncio.sleep(0.1)
+            await vc_channel.disconnect()
+        else:
+            await ctx.send(ctx.author.name + " is not in a channel.")
 
     @commands.command(aliases=['list'])
     @commands.check(check_owner)
