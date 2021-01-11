@@ -28,7 +28,7 @@ class Test(Cog_Extension):
 
             team += "\n\n"
 
-        if users != None:
+        if users:
             team += "剩餘玩家:"
             for i in users:
                 team += "   " + i
