@@ -19,15 +19,19 @@ class Test(Cog_Extension):
         team = ""
 
         for i in range(int(len(users)/count)):
-            team += "第" + str(i+1) + "小隊: "
+            team += "第" + str(i+1) + "小隊:"
 
             for _ in range(count):
                 rand = random.choice(users)
-                team += rand + " "
+                team += "   " + rand
                 users.remove(rand)
 
-            team += "\n"
+            team += "\n\n"
 
+        if users != None:
+            team += "剩餘玩家:"
+            for i in users:
+                team += "   " + i
         await ctx.send(team)
 
 
