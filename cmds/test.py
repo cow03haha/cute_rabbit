@@ -34,6 +34,53 @@ class Test(Cog_Extension):
                 team += "   " + i
         await ctx.send(team)
 
+    @commands.command()
+    @commands.check(check_owner)
+    async def checkout(self, ctx):
+        guild = self.bot.get_guild(743292989790748812)
+
+        channel = self.bot.get_channel(743768856853479525)
+        notice = await channel.send("結算中...")
+
+        channel = self.bot.get_channel(753543338006806528)
+        role = guild.get_role(743292989790748812)
+        msg = await channel.send("結算中...")
+        await channel.set_permissions(role, send_messages=False)
+
+        with open('members.json', 'r', encoding='utf8') as bcfile:
+            bcdata = json.load(bcfile)
+
+        for i in bcdata["member_id"]:
+            if bcdata[f'{i}']["today"] != True:
+                bcdata[f'{i}']["total"] = 0
+                with open('members.json', 'w', encoding='utf8') as bcfile:
+                    json.dump(bcdata, bcfile, indent=4)
+            else:
+                bcdata[f'{i}']["today"] = False
+                with open('members.json', 'w', encoding='utf8') as bcfile:
+                    json.dump(bcdata, bcfile, indent=4)
+
+            if bcdata[f'{i}']["total"] < 3 and bcdata[f'{i}']["custom_role"] != False and bcdata[f'{i}']["remain"] == False:
+                member = guild.get_member(i)
+                role = guild.get_role(bcdata[f'{i}']["custom_role"])
+                await member.remove_roles(role)
+            elif bcdata[f'{i}']["total"] >= 3 and bcdata[f'{i}']["custom_role"] != False:
+                member = guild.get_member(i)
+                role = guild.get_role(bcdata[f'{i}']["custom_role"])
+                await member.add_roles(role)
+
+            if bcdata[f'{i}']["total"] >= 14:
+                bcdata[f'{i}']["remain"] = True
+                with open('members.json', 'w', encoding='utf8') as bcfile:
+                    json.dump(bcdata, bcfile, indent=4)
+
+        await msg.delete()
+        role = guild.get_role(743292989790748812)
+        await channel.set_permissions(role, send_messages=None)
+
+        channel = self.bot.get_channel(743768856853479525)
+        await notice.edit(content="結算成功!", delete_after=60)
+
 
 def setup(bot):
     bot.add_cog(Test(bot))
