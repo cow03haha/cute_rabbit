@@ -1,15 +1,17 @@
-import discord
-from discord.ext import commands
-from cores.classes import Cog_Extension
-import pytz
 import asyncio
-import json
 import datetime
+import json
+
+import discord
+import pytz
+
+from cores.classes import Cog_Extension
+
 
 class Task(Cog_Extension):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        
+
         '''
         async def interval():
             await self.bot.wait_until_ready()
@@ -20,9 +22,9 @@ class Task(Cog_Extension):
             
         self.bg_task = self.bot.loop.create_task(interval())
         '''
-        
-        #self.counter = 0
-        
+
+        # self.counter = 0
+
         async def daily_check():
             await self.bot.wait_until_ready()
 
@@ -31,7 +33,7 @@ class Task(Cog_Extension):
 
                 if now_time == "000000":
                     guild = self.bot.get_guild(743292989790748812)
-                    
+
                     channel = self.bot.get_channel(743768856853479525)
                     notice = await channel.send("結算中...")
 
@@ -44,7 +46,7 @@ class Task(Cog_Extension):
                         bcdata = json.load(bcfile)
 
                     for i in bcdata["member_id"]:
-                        if bcdata[f'{i}']["today"] != True:
+                        if not bcdata[f'{i}']["today"]:
                             bcdata[f'{i}']["total"] = 0
                             with open('members.json', 'w', encoding='utf8') as bcfile:
                                 json.dump(bcdata, bcfile, indent=4)
@@ -52,47 +54,47 @@ class Task(Cog_Extension):
                             bcdata[f'{i}']["today"] = False
                             with open('members.json', 'w', encoding='utf8') as bcfile:
                                 json.dump(bcdata, bcfile, indent=4)
-                        
-                        if bcdata[f'{i}']["total"] < 3 and bcdata[f'{i}']["custom_role"] != False and bcdata[f'{i}']["remain"] == False :
+
+                        if bcdata[f'{i}']["total"] < 3 and bcdata[f'{i}']["custom_role"] \
+                                and not bcdata[f'{i}']["remain"]:
                             member = guild.get_member(i)
                             role = guild.get_role(bcdata[f'{i}']["custom_role"])
                             await member.remove_roles(role)
-                        elif bcdata[f'{i}']["total"] >= 3 and bcdata[f'{i}']["custom_role"] != False:
+                        elif bcdata[f'{i}']["total"] >= 3 and bcdata[f'{i}']["custom_role"]:
                             member = guild.get_member(i)
                             role = guild.get_role(bcdata[f'{i}']["custom_role"])
                             await member.add_roles(role)
-                        
+
                         if bcdata[f'{i}']["total"] >= 14:
                             bcdata[f'{i}']["remain"] = True
                             with open('members.json', 'w', encoding='utf8') as bcfile:
                                 json.dump(bcdata, bcfile, indent=4)
-                    
+
                     await msg.delete()
                     role = guild.get_role(743292989790748812)
                     await channel.set_permissions(role, send_messages=None)
 
-                    channel = self.bot.get_channel(743768856853479525)
                     await notice.edit(content="結算成功!", delete_after=60)
-                        
+
                     await asyncio.sleep(60)
                 else:
                     await asyncio.sleep(1)
                     pass
 
         self.bg_task = self.bot.loop.create_task(daily_check())
-        
+
         async def reminder():
             await self.bot.wait_until_ready()
-            
+
             while not self.bot.is_closed():
                 now_time = datetime.datetime.now().strftime('%H%M%S')
-                
+
                 with open('members.json', 'r', encoding='utf8') as bcfile:
                     bcdata = json.load(bcfile)
 
                 if now_time in bcdata["remind_time"]:
                     for i in bcdata["member_id"]:
-                        if "remind_list" in bcdata[f'{i}'] :
+                        if "remind_list" in bcdata[f'{i}']:
                             user = self.bot.get_user(i)
                             cow = self.bot.get_user(315414910689476609)
                             tw = pytz.timezone('Asia/Taipei')
@@ -111,9 +113,9 @@ class Task(Cog_Extension):
                 else:
                     await asyncio.sleep(1)
                     pass
-            
+
         self.bg_task = self.bot.loop.create_task(reminder())
-        
+
         '''
         async def fight_task():
             await self.bot.wait_until_ready()
@@ -177,6 +179,7 @@ class Task(Cog_Extension):
         with open('settings.json', 'w', encoding='utf8') as bcfile:
             json.dump(bcdata, bcfile, indent=4)
     '''
+
 
 def setup(bot):
     bot.add_cog(Task(bot))
