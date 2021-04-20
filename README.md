@@ -1,2 +1,2 @@
 # dc-bot
-dc bot for me
+dc bot for rabbit guild(broken)
